@@ -1,0 +1,46 @@
+services:
+  nginx:
+    image: nginx:1.26.2-alpine
+    container_name: OLIVEIRA_TRUST_WEB
+    ports:
+      - 8084:80
+    volumes:
+      - ./www:/usr/share/nginx/html:rw
+      - ./docker/nginx/:/etc/nginx/conf.d
+      - ./docker/nginx/logs:/var/log/nginx
+    depends_on:
+      - php
+    restart: always
+    networks:
+      - desafio_desenvolvedor
+
+  php:
+    container_name: OLIVEIRA_TRUST_PHP83
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    expose:
+      - "9000"
+    volumes:
+      - ./www:/usr/share/nginx/html:rw
+    restart: always
+    networks:
+      - desafio_desenvolvedor
+
+  mysql:
+    container_name: OLIVEIRA_TRUST_MYSQL
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    volumes:
+      - ./docker/database/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123123
+      #MYSQL_DATABASE: db_desafio_desenvolvimento
+    ports:
+      - 3308:3306
+    networks:
+      - desafio_desenvolvedor
+networks:
+  desafio_desenvolvedor:
+    driver: bridge
