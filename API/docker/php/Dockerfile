@@ -55,6 +55,9 @@ USER root
 #COPIAR OS ARQUIVOS DO REPOSITORY
 COPY ../www /usr/share/nginx/html
 
+#RUN MIGRATIONS 
+RUN php /usr/share/nginx/html/artisan migrate
+
 # ADD REPSOITORY AND PERMISSION
 RUN chown -R www-data:www-data /usr/share/nginx/html && \
     chmod -R 750 /usr/share/nginx/html && \
