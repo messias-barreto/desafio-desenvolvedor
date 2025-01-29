@@ -66,7 +66,7 @@ return new class extends Migration
             $table->string('CtdyTrtmntTpNm')->nullable();
             $table->string('MktCptlstn')->nullable();
             $table->string('CorpGovnLvlNm')->nullable();
-            $table->foreignIdFor(UploadFile::class)->constrained();
+            $table->foreignIdFor(UploadFile::class)->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
