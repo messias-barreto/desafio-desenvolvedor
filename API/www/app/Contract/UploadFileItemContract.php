@@ -1,8 +1,7 @@
 <?php 
 namespace App\Contract;
 
-interface UploadFileContract
+interface UploadFileItemContract
 {
     public function create(array $data): object;
-    public function findByName(string $name): ?object;
 }
