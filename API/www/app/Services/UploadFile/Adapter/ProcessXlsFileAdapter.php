@@ -4,8 +4,6 @@ namespace App\Services\UploadFile\Adapter;
 
 use App\Contract\ProcessFileContract;
 use App\Contract\UploadFileItemContract;
-use App\Models\UploadFileItem;
-use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class ProcessXlsFileAdapter implements ProcessFileContract
