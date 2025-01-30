@@ -18,4 +18,9 @@ class UploadFileItemRepository implements UploadFileItemContract
     {
         return $this->repository->create($data);
     }
+
+    public function insertBatch(array $data)
+    {
+        return $this->repository->insert($data);
+    }
 }

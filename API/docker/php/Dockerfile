@@ -19,7 +19,8 @@ RUN set -eux; \
             libwebp-dev \
             libxpm-dev \
             libmcrypt-dev \
-            libonig-dev; \
+            libonig-dev \
+            libzip-dev; \
     rm -rf /var/lib/apt/lists/*
 
 RUN set -eux; \
@@ -34,6 +35,10 @@ RUN set -eux; \
     docker-php-ext-install gd; \
     php -r 'var_dump(gd_info());'
 
+# Instalar a extensão zip do PHP
+RUN apt-get update && apt-get install -y libzip-dev && \
+    docker-php-ext-install zip
+    
 RUN ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime && \
     echo "America/Sao_Paulo" > /etc/timezone && \
     dpkg-reconfigure --frontend noninteractive tzdata
@@ -54,9 +59,6 @@ USER root
 
 #COPIAR OS ARQUIVOS DO REPOSITORY
 COPY ../www /usr/share/nginx/html
-
-#RUN MIGRATIONS 
-RUN php /usr/share/nginx/html/artisan migrate
 
 # ADD REPSOITORY AND PERMISSION
 RUN chown -R www-data:www-data /usr/share/nginx/html && \
