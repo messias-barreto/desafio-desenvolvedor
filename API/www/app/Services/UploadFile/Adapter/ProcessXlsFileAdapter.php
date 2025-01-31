@@ -4,6 +4,8 @@ namespace App\Services\UploadFile\Adapter;
 
 use App\Contract\ProcessFileContract;
 use App\Contract\UploadFileItemContract;
+use App\Exceptions\BadRequestException;
+use Exception;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class ProcessXlsFileAdapter implements ProcessFileContract
@@ -12,10 +14,13 @@ class ProcessXlsFileAdapter implements ProcessFileContract
         private readonly UploadFileItemContract $repository
     ) {}
 
-    public function processItem(object $data, int $upload_file_id): array
+    public function processItem(string $data, int $upload_file_id): void
     {
+        dd('asasa');
         $path = $data->getRealPath();
-        $spreadsheet = IOFactory::load($path);
+        $reader = IOFactory::createReader('Xls');
+        $reader->setReadDataOnly(true); // Lê apenas os dados, não o formato
+        $spreadsheet = $reader->load($path);
         
         $sheet = $spreadsheet->getActiveSheet();
         $data = [];
@@ -32,8 +37,17 @@ class ProcessXlsFileAdapter implements ProcessFileContract
             $data[] = array_combine($header, $formatedUploadRowItem);
         }
         
-        $this->repository->insertBatch($data);
-        return [];
+        try {
+            $chunks = array_chunk($data, 10000); // Divide em lotes de 1000 registros
+            foreach ($chunks as $chunk) {
+                $fileBatch = $this->repository->insertBatch($chunk);
+                if(!$fileBatch) {
+                    throw new BadRequestException('Os Arquivo Não foi Processado no Banco de Dados');
+                }
+            }
+        }catch(Exception $e) {
+            dd($e->getMessage());
+        }
     }
 
     public function getRowData(object $row)

@@ -5,6 +5,7 @@ namespace App\Services\UploadFile;
 use App\Contract\UploadFileContract;
 use App\Contract\UploadFileItemContract;
 use App\Exceptions\ConflictException;
+use App\Jobs\FileUploadJob;
 use App\Services\UploadFile\Adapter\ProcessCsvFileAdapter;
 use App\Services\UploadFile\Adapter\ProcessXlsFileAdapter;
 use Exception;
@@ -33,16 +34,26 @@ class CreateNewUploadFileService
             DB::beginTransaction();
             $uploadFile = $this->repository->create(['name' => $fileName]);
             $fileExtencion = $file->getClientOriginalExtension();
+
+            // Salvar o arquivo na storage local
+            $filePath = $file->storeAs('uploads', $fileName, 'local');
+
+            // Obter o caminho completo do arquivo salvo
+            $fullPath = storage_path("app/$filePath");
+
             $fileData = [
-                'arquivo' => $data['arquivo'],
+                'fileName' => $fullPath,
                 'uploadFileId' => $uploadFile->id
             ];
-            $this->processFile($fileData, $fileExtencion);
+
+            #$this->processFile($fileData, $fileExtencion);  
+
+            FileUploadJob::dispatch($fileData, $fileExtencion);
             DB::commit();
             
             return [
                 'status' => 201,
-                'message' => "O Arquivo {$fileName} foi Inserido no Sistema com Sucesso",
+                'message' => "O Arquivo {$fileName} Está Sendo Processado!",
             ];
 
         }catch(Exception $e) {
@@ -50,11 +61,10 @@ class CreateNewUploadFileService
         }
     }
 
-    public function processFile(array $data, string $type): array 
+    public function processFile(array $data, string $type): void 
     {
-        return match ($type) {
-            'csv' => $this->processCsvFileAdapter->processItem($data['arquivo'], $data['uploadFileId']),
-            'xls' => $this->processXlsFileAdapter->processItem($data['arquivo'], $data['uploadFileId'])
+        $data = match ($type) {
+            'csv' => $this->processCsvFileAdapter->processItem($data['fileName'], $data['uploadFileId'])
         };
     }
 }
