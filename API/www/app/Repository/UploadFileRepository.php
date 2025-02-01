@@ -4,6 +4,7 @@ namespace App\Repository;
 use App\Contract\UploadFileContract;
 use App\Models\UploadFile;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class UploadFileRepository implements UploadFileContract
 {
@@ -31,6 +32,11 @@ class UploadFileRepository implements UploadFileContract
     public function findByLikedName(string $name): ?object
     {
         return $this->repository->where('name', 'like', '%' . $name . '%')->get();
+    }
+
+    public function findByCreatedDate(string $date): ?object
+    {
+        return $this->repository->where(DB::raw('DATE(created_at)'), $date)->get(); 
     }
 
     public function update(array $data): bool
