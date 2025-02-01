@@ -4,8 +4,10 @@ namespace App\Services\UploadFile\Adapter;
 
 use App\Contract\ProcessFileContract;
 use App\Contract\UploadFileItemContract;
-use App\Exceptions\BadRequestException;
 use Exception;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class ProcessXlsFileAdapter implements ProcessFileContract
@@ -14,51 +16,42 @@ class ProcessXlsFileAdapter implements ProcessFileContract
         private readonly UploadFileItemContract $repository
     ) {}
 
-    public function processItem(string $data, int $upload_file_id): void
+    public function processItem(string $filePath, int $upload_file_id): void
     {
-        dd('asasa');
-        $path = $data->getRealPath();
+        $fileLock = Cache::lock('processing-file-' . $upload_file_id, 600);
         $reader = IOFactory::createReader('Xls');
-        $reader->setReadDataOnly(true); // Lê apenas os dados, não o formato
-        $spreadsheet = $reader->load($path);
-        
+        $reader->setReadDataOnly(true);
+        $spreadsheet = $reader->load($filePath);
         $sheet = $spreadsheet->getActiveSheet();
-        $data = [];
-        $header = null;
-        foreach ($sheet->getRowIterator() as $index => $row) {
-            if ($index == 1) {
-                $header = $this->getRowData($row);
-                $header[] = 'upload_file_id';
-                continue;
-            }
-           
-            $formatedUploadRowItem = $this->getRowData($row);
-            $formatedUploadRowItem[] = $upload_file_id;
-            $data[] = array_combine($header, $formatedUploadRowItem);
-        }
-        
-        try {
-            $chunks = array_chunk($data, 10000); // Divide em lotes de 1000 registros
-            foreach ($chunks as $chunk) {
-                $fileBatch = $this->repository->insertBatch($chunk);
-                if(!$fileBatch) {
-                    throw new BadRequestException('Os Arquivo Não foi Processado no Banco de Dados');
-                }
-            }
-        }catch(Exception $e) {
-            dd($e->getMessage());
-        }
-    }
+        $data = $sheet->toArray();
+        $header = $data[0];
+        array_push($header, 'upload_file_id');
+        array_shift($data);
+        $limitChunk = 500;
+        $count = 0;
+        foreach (array_chunk($data, $limitChunk) as $chunk) {
+            DB::beginTransaction();
+            try {
+                $chunk = array_map(function ($row) use ($upload_file_id, $header) {
+                    $row['upload_file_id'] = $upload_file_id;
+                    return array_combine($header, $row);
+                }, $chunk);
 
-    public function getRowData(object $row)
-    {
-        $rowData = [];
-        $cellIterator = $row->getCellIterator();
-        $cellIterator->setIterateOnlyExistingCells(false);
-        foreach ($cellIterator as $cell) {
-            $rowData[] = $cell->getValue();
+                $count++;
+                $this->repository->insertBatch($chunk);
+                Log::info('BATCH ' . $count . ' ADICIONADA!');
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollBack();
+
+                Log::error('Erro ao Processar o Arquivo', [
+                    'message_error' => $e->getMessage()
+                ]);
+                $fileLock->release();
+            }
         }
 
-        return $rowData;
+        Log::info('Arquivo foi Processado com Sucesso!');
+        $fileLock->release();
     }
 }

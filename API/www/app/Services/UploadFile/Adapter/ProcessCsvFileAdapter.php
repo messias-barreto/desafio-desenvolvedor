@@ -22,7 +22,6 @@ namespace App\Services\UploadFile\Adapter {
             $csv->setHeaderOffset(0);
             $limitChunk = 1000;
             $uploadFileItemChunck = [];
-            $count = 0;
 
             try {
                 foreach ($csv as $row) {
@@ -30,10 +29,8 @@ namespace App\Services\UploadFile\Adapter {
                     $uploadFileItemChunck[] = $row;
                     
                     if(count($uploadFileItemChunck) >= $limitChunk) {
-                        $count++;
                         $this->repository->insertBatch($uploadFileItemChunck);
                         $uploadFileItemChunck = [];
-                        Log::info('Chunk ' . $count . ' FOI INCLUIDO');
                     } 
                 }
 
@@ -44,7 +41,7 @@ namespace App\Services\UploadFile\Adapter {
                 Log::info("Os Itens Foram Inclídos no Sistema");
                 $fileLock->release();
             }catch(Exception $e) {
-                Log::info("Erro Gerado No Processamento do Arquivo!", [
+                Log::error("Erro Gerado No Processamento do Arquivo!", [
                     'error_message' => $e->getMessage()
                 ]);
                 

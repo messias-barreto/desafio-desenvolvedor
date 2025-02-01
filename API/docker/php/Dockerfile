@@ -42,7 +42,7 @@ RUN set -eux; \
 # Configurar parâmetros do PHP
 RUN echo "upload_max_filesize=32M" > /usr/local/etc/php/conf.d/uploads.ini
 RUN echo "post_max_size=32M" >> /usr/local/etc/php/conf.d/uploads.ini    
-RUN echo "memory_limit=1024M" > /usr/local/etc/php/conf.d/memory-limit.ini
+RUN echo "memory_limit=2G" > /usr/local/etc/php/conf.d/memory-limit.ini
 RUN echo "max_execution_time=600" > /usr/local/etc/php/conf.d/max-execution-time.ini
 
 # Instalar a extensão zip

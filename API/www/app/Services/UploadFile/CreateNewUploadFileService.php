@@ -64,7 +64,8 @@ class CreateNewUploadFileService
     public function processFile(array $data, string $type): void 
     {
         $data = match ($type) {
-            'csv' => $this->processCsvFileAdapter->processItem($data['fileName'], $data['uploadFileId'])
+            'csv' => $this->processCsvFileAdapter->processItem($data['fileName'], $data['uploadFileId']),
+            'xls' => $this->processXlsFileAdapter->processItem($data['fileName'], $data['uploadFileId'])
         };
     }
 }
