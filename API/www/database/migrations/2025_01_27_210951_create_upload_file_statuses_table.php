@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\UploadFileStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -10,14 +9,12 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('upload_files', function (Blueprint $table) {
+        Schema::create('upload_file_statuses', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->foreignIdFor(UploadFileStatus::class)
-                ->constrained()
-                ->default(1);
+            $table->string('name');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('upload_files');
+        Schema::dropIfExists('upload_file_statuses');
     }
 };
