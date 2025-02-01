@@ -23,4 +23,9 @@ class UploadFileItemRepository implements UploadFileItemContract
     {
         return $this->repository->insert($data);
     }
+
+    public function getByUploadFileid(int $uploadFileId): object
+    {
+        return $this->repository->where('upload_file_id', $uploadFileId)->paginate(50);
+    }
 }
