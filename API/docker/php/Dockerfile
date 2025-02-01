@@ -62,6 +62,9 @@ RUN apt-get update && apt-get install -y \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer \
     && rm -rf /var/lib/apt/lists/*
 
+#rodar o supervisor 
+RUN supervisord -c /etc/supervisor/supervisord.conf
+
 # Trabalhar no diretório do Nginx
 WORKDIR /usr/share/nginx/html
 
@@ -87,5 +90,9 @@ RUN chown -R www-data:www-data /usr/share/nginx/html && \
 RUN composer install --no-dev --working-dir=/usr/share/nginx/html && \
     chown -R www-data:www-data /usr/share/nginx/html
 
-# Definir o comando padrão para iniciar o PHP-FPM
-CMD ["php-fpm"]
+# Adicione o script de inicialização
+COPY ../docker/php/start_php_container.sh /start_php_container.sh
+RUN chmod +x /start_php_container.sh
+
+# Defina o script como comando padrão
+CMD ["/start_php_container.sh"]
