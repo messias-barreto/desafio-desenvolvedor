@@ -4,13 +4,13 @@ namespace App\Services\UploadFile;
 
 use App\Contract\UploadFileContract;
 use App\Contract\UploadFileItemContract;
+use App\Exceptions\BadRequestException;
 use App\Exceptions\ConflictException;
 use App\Jobs\FileUploadJob;
 use App\Services\UploadFile\Adapter\ProcessCsvFileAdapter;
 use App\Services\UploadFile\Adapter\ProcessXlsFileAdapter;
 use Exception;
 use Illuminate\Support\Facades\DB;
-use League\Csv\Reader;
 
 class CreateNewUploadFileService
 {
@@ -21,24 +21,24 @@ class CreateNewUploadFileService
         private readonly UploadFileItemContract $itemRepository
     ) {}
 
-    public function execute(array $data): array 
+    public function execute(array $data): array
     {
         $file = $data['arquivo'];
         $fileName = $file->getClientOriginalName();
         $uploadFileAlreadyExists = $this->repository->findByName($fileName);
-        if($uploadFileAlreadyExists) {
+        if ($uploadFileAlreadyExists) {
             throw new ConflictException('O Arquivo Enviado Já Consta em Nosso Sistema');
         }
-        
+
         try {
             DB::beginTransaction();
-            $uploadFile = $this->repository->create(['name' => $fileName]);
+            $uploadFile = $this->repository->create([
+                'name' => $fileName,
+                'upload_file_status_id' => 1
+            ]);
+
             $fileExtencion = $file->getClientOriginalExtension();
-
-            // Salvar o arquivo na storage local
             $filePath = $file->storeAs('uploads', $fileName, 'local');
-
-            // Obter o caminho completo do arquivo salvo
             $fullPath = storage_path("app/$filePath");
 
             $fileData = [
@@ -50,18 +50,17 @@ class CreateNewUploadFileService
 
             FileUploadJob::dispatch($fileData, $fileExtencion);
             DB::commit();
-            
+
             return [
                 'status' => 201,
                 'message' => "O Arquivo {$fileName} Está Sendo Processado!",
             ];
-
-        }catch(Exception $e) {
-            dd($e->getMessage());
+        } catch (Exception $e) {
+            throw new BadRequestException('Não foi Possível Processar o Arquivo Enviado, Porfavor Tente Novamente');
         }
     }
 
-    public function processFile(array $data, string $type): void 
+    public function processFile(array $data, string $type): void
     {
         $data = match ($type) {
             'csv' => $this->processCsvFileAdapter->processItem($data['fileName'], $data['uploadFileId']),

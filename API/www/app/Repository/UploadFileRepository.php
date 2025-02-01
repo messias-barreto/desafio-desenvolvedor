@@ -18,8 +18,18 @@ class UploadFileRepository implements UploadFileContract
         return $this->repository->create($data);
     }
 
+    public function findById(int $id): ?object
+    {
+        return $this->repository->find($id);
+    }
+
     public function findByName(string $name): ?object
     {
         return $this->repository->where('name', $name)->first();
+    }
+
+    public function update(array $data): bool
+    {
+        return $this->repository->update($data);
     }
 }
