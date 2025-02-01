@@ -28,6 +28,11 @@ class UploadFileRepository implements UploadFileContract
         return $this->repository->where('name', $name)->first();
     }
 
+    public function findByLikedName(string $name): ?object
+    {
+        return $this->repository->where('name', 'like', '%' . $name . '%')->get();
+    }
+
     public function update(array $data): bool
     {
         return $this->repository->update($data);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\UploadFile;
 
 use App\Http\Controllers\Controller;
 use App\Services\UploadFile\CreateNewUploadFileService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class CreateNewUploadFileController extends Controller
@@ -13,8 +14,9 @@ class CreateNewUploadFileController extends Controller
     ) {
     }
 
-    public function handle(Request $request)
+    public function handle(Request $request): JsonResponse
     {
-        return $this->service->execute($request->all());
+        $response = $this->service->execute($request->all());
+        return response()->json($response, 201);
     }
 }
