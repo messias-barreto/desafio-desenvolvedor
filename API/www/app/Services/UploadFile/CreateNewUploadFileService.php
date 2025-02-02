@@ -30,6 +30,11 @@ class CreateNewUploadFileService
             throw new ConflictException('O Arquivo Enviado Já Consta em Nosso Sistema');
         }
 
+        $fileExtencion = $file->getClientOriginalExtension();
+        if($fileExtencion === 'txt') {
+            throw new ConflictException('O arquivo deve estar no formato CSV ou XLSX');
+        }
+
         try {
             DB::beginTransaction();
             $uploadFile = $this->repository->create([
@@ -37,7 +42,6 @@ class CreateNewUploadFileService
                 'upload_file_status_id' => 1
             ]);
 
-            $fileExtencion = $file->getClientOriginalExtension();
             $filePath = $file->storeAs('uploads', $fileName, 'local');
             $fullPath = storage_path("app/$filePath");
 
