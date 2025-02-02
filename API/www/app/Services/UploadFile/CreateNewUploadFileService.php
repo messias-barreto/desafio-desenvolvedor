@@ -41,13 +41,18 @@ class CreateNewUploadFileService
             $filePath = $file->storeAs('uploads', $fileName, 'local');
             $fullPath = storage_path("app/$filePath");
 
+            if($fileExtencion === 'csv') {
+                $fileContent = file($fullPath); // Lê o arquivo linha por linha, retornando um array
+                array_shift($fileContent);
+                file_put_contents($fullPath, implode('', $fileContent));
+            }
+            
             $fileData = [
                 'fileName' => $fullPath,
                 'uploadFileId' => $uploadFile->id
             ];
 
             #$this->processFile($fileData, $fileExtencion);  
-
             FileUploadJob::dispatch($fileData, $fileExtencion);
             DB::commit();
 
@@ -56,6 +61,7 @@ class CreateNewUploadFileService
                 'message' => "O Arquivo {$fileName} Está Sendo Processado!",
             ];
         } catch (Exception $e) {
+            DB::rollBack();
             throw new BadRequestException('Não foi Possível Processar o Arquivo Enviado, Porfavor Tente Novamente');
         }
     }
@@ -64,7 +70,7 @@ class CreateNewUploadFileService
     {
         $data = match ($type) {
             'csv' => $this->processCsvFileAdapter->processItem($data['fileName'], $data['uploadFileId']),
-            'xls' => $this->processXlsFileAdapter->processItem($data['fileName'], $data['uploadFileId'])
+            'xlsx' => $this->processXlsFileAdapter->processItem($data['fileName'], $data['uploadFileId'])
         };
     }
 }

@@ -22,12 +22,20 @@ namespace App\Services\UploadFile\Adapter {
         {
             $fileLock = Cache::lock('processing-file-' . $upload_file_id, 600);
             $csv = Reader::createFromPath($filePath, 'r');
+            $csv->setDelimiter(';');
             $csv->setHeaderOffset(0);
             $limitChunk = 1000;
             $uploadFileItemChunck = [];
+            $count = 0;
 
             try {
                 foreach ($csv as $row) {
+                    array_walk_recursive($row, function (&$value) {
+                        if (is_string($value)) {
+                            $value = mb_convert_encoding($value, 'UTF-8', 'auto');
+                        }
+                    });
+
                     $row['upload_file_id'] = $upload_file_id;
                     $uploadFileItemChunck[] = $row;
 
@@ -36,6 +44,7 @@ namespace App\Services\UploadFile\Adapter {
                         $this->repository->insertBatch($uploadFileItemChunck);
                         $uploadFileItemChunck = [];
                         DB::commit();
+                        $count++;
                     }
                 }
 
@@ -53,7 +62,7 @@ namespace App\Services\UploadFile\Adapter {
             } catch (Exception $e) {
                 DB::rollBack();
 
-                $this->saveStatusUploadFile(2, $upload_file_id);
+                $this->saveStatusUploadFile(3, $upload_file_id);
                 Log::error("Erro Gerado No Processamento do Arquivo!", [
                     'error_message' => $e->getMessage()
                 ]);
