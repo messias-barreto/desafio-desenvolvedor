@@ -1,0 +1,253 @@
+{
+    "variable": [
+        {
+            "id": "baseUrl",
+            "key": "baseUrl",
+            "type": "string",
+            "name": "string",
+            "value": "http:\/\/localhost:8084"
+        }
+    ],
+    "info": {
+        "name": "Desafio Desenvolvedor - Oliveira Trust",
+        "_postman_id": "3a81f309-cabb-4151-b23b-2bff19869ee8",
+        "description": "",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "Endpoints",
+            "description": "",
+            "item": [
+                {
+                    "name": "Realizar o Upload do Arquivo",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/upload-file",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/upload-file"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {ACCESS_TOKEN}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "multipart\/form-data"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "arquivo",
+                                    "src": [],
+                                    "type": "file"
+                                }
+                            ]
+                        },
+                        "description": "<p>Este Endpoint Realiza o <strong>Upload e Processamento do Arquivo<\/strong>. \u00c9 Necess\u00e1rio para um valor chamado <strong>arquivo<\/strong> no body da requisi\u00e7\u00e3o, nos formatos CSV ou XLSX<\/p>."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 201,
+                            "body": "{\n    \"message\": \"O Arquivo nome_arquivo Est\u00e1 Sendo Processado!\",\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n     \"message\": \"Unauthenticated.\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 409,
+                            "body": "{\n     \"message\": \"O Arquivo Enviado J\u00e1 Consta em Nosso Sistema\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Buscar Arquivos Por Nome",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/upload-file\/:name",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/upload-file\/:name",
+                            "variable": [
+                                {
+                                    "id": "name",
+                                    "key": "name",
+                                    "value": "et",
+                                    "description": ""
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {ACCESS_TOKEN}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "<p>Este Endpoint Realiza a Busca, e retorno das informa\u00e7\u00f5es, referente aos arquivos, pelo nome do Arquivo<\/p>."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n      \"message\": \"Documento(s) foram Encontrado(s)\",\n      \"data\": [\n          {\n              \"nome\": \"InstrumentsConsolidatedFile_20250128_1.csv\",\n              \"status\": \"PROCESSADO\",\n              \"data_criacao\": \"02-02-2025 16:47:49\"\n          }\n      ]\n  }",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n      \"message\": \"\"message\": \"N\u00e3o foi Encontrado Nenhum Arquivo com Esse Nome\",\n  }",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n     \"message\": \"Unauthenticated.\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Buscar Informa\u00e7\u00f5es do Arquivo",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/upload-file\/item\/:name",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/upload-file\/item\/:name",
+                            "variable": [
+                                {
+                                    "id": "name",
+                                    "key": "name",
+                                    "value": "facilis",
+                                    "description": ""
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {ACCESS_TOKEN}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "<p>Este Endpoint Realiza a Busca, e retorno das informa\u00e7\u00f5es, referente aos itens(linhas) do arquivos, podendo passar os filtros de busca pelo params<\/p>."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"message\": \"Itens Foram Encontrados com Sucesso\",\n\"arquivo\": \"InstrumentsConsolidatedFile_20250128_1.csv\",\n\"data\": {\n  \"current_page\": 1,\n  \"data\": [\n      {\n          \"id\": 2204372,\n          \"RptDt\": \"2025-01-28\",\n          \"TckrSymb\": \"003H11\",\n          \"Asst\": \"003H\",\n          \"AsstDesc\": \"003H\",\n          \"SgmtNm\": \"CASH\",\n          \"MktNm\": \"EQUITY-CASH\",\n          \"SctyCtgyNm\": \"FUNDS\",\n          \"XprtnDt\": \"\",\n          \"XprtnCd\": \"\",\n          \"TradgStartDt\": \"9999-12-31\",\n          \"TradgEndDt\": \"9999-12-31\",\n          \"BaseCd\": \"\",\n          \"ConvsCritNm\": \"\",\n          \"MtrtyDtTrgtPt\": \"\",\n          \"ReqrdConvsInd\": \"\",\n          \"ISIN\": \"BR003HCTF006\",\n          \"CFICd\": \"CICGRY\",\n          \"DlvryNtceStartDt\": \"\",\n          \"DlvryNtceEndDt\": \"\",\n          \"OptnTp\": \"\",\n          \"CtrctMltplr\": \"\",\n          \"AsstQtnQty\": \"\",\n          \"AllcnRndLot\": \"1\",\n          \"TradgCcy\": \"BRL\",\n          \"DlvryTpNm\": \"\",\n          \"WdrwlDays\": \"\",\n          \"WrkgDays\": \"\",\n          \"ClnrDays\": \"\",\n          \"RlvrBasePricNm\": \"\",\n          \"OpngFutrPosDay\": \"\",\n          \"SdTpCd1\": \"\",\n          \"UndrlygTckrSymb1\": \"\",\n          \"SdTpCd2\": \"\",\n          \"UndrlygTckrSymb2\": \"\",\n          \"PureGoldWght\": \"\",\n          \"ExrcPric\": \"\",\n          \"OptnStyle\": \"\",\n          \"ValTpNm\": \"\",\n          \"PrmUpfrntInd\": \"\",\n          \"OpngPosLmtDt\": \"\",\n          \"DstrbtnId\": \"100\",\n          \"PricFctr\": \"1\",\n          \"DaysToSttlm\": \"2\",\n          \"SrsTpNm\": \"\",\n          \"PrtcnFlg\": \"\",\n          \"AutomtcExrcInd\": \"\",\n          \"SpcfctnCd\": \"CI\",\n          \"CrpnNm\": \"KINEA CO-INVESTIMENTO FDO INV IMOB\",\n          \"CorpActnStartDt\": \"9999-12-31\",\n          \"CtdyTrtmntTpNm\": \"FUNGIBLE\",\n          \"MktCptlstn\": \"15000\",\n         \"CorpGovnLvlNm\": \"\",\n          \"upload_file_id\": 122,\n          \"created_at\": null,\n          \"updated_at\": null\n      },\n      ...\n  ],\n  \"first_page_url\": \"http:\/\/127.0.0.1:8084\/api\/upload-file\/item\/InstrumentsConsolidatedFile_20250128_1.csv?page=1\",\n  \"from\": 1,\n  \"last_page\": 1533,\n  \"last_page_url\": \"http:\/\/127.0.0.1:8084\/api\/upload-file\/item\/InstrumentsConsolidatedFile_20250128_1.csv?page=1533\",\n  \"links\": [\n      {\n          \"url\": null,\n          \"label\": \"&laquo; Previous\",\n          \"active\": false\n      },\n      {\n          \"url\": \"http:\/\/127.0.0.1:8084\/api\/upload-file\/item\/InstrumentsConsolidatedFile_20250128_1.csv?page=1\",\n          \"label\": \"1\",\n          \"active\": true\n      },\n      {\n          \"url\": \"http:\/\/127.0.0.1:8084\/api\/upload-file\/item\/InstrumentsConsolidatedFile_20250128_1.csv?page=2\",\n          \"label\": \"2\",\n          \"active\": false\n      },\n      {\n          \"url\": \"http:\/\/127.0.0.1:8084\/api\/upload-file\/item\/InstrumentsConsolidatedFile_20250128_1.csv?page=3\",\n          \"label\": \"3\",\n          \"active\": false\n      },\n      {\n          \"url\": \"http:\/\/127.0.0.1:8084\/api\/upload-file\/item\/InstrumentsConsolidatedFile_20250128_1.csv?page=4\",\n          \"label\": \"4\",\n          \"active\": false\n      },\n      {\n          \"url\": \"http:\/\/127.0.0.1:8084\/api\/upload-file\/item\/InstrumentsConsolidatedFile_20250128_1.csv?page=5\",\n          \"label\": \"5\",\n          \"active\": false\n      },\n      {\n          \"url\": \"http:\/\/127.0.0.1:8084\/api\/upload-file\/item\/InstrumentsConsolidatedFile_20250128_1.csv?page=6\",\n          \"label\": \"6\",\n          \"active\": false\n      },\n      {\n          \"url\": \"http:\/\/127.0.0.1:8084\/api\/upload-file\/item\/InstrumentsConsolidatedFile_20250128_1.csv?page=7\",\n          \"label\": \"7\",\n          \"active\": false\n      },\n      {\n          \"url\": \"http:\/\/127.0.0.1:8084\/api\/upload-file\/item\/InstrumentsConsolidatedFile_20250128_1.csv?page=8\",\n          \"label\": \"8\",\n          \"active\": false\n      },\n      {\n          \"url\": \"http:\/\/127.0.0.1:8084\/api\/upload-file\/item\/InstrumentsConsolidatedFile_20250128_1.csv?page=9\",\n          \"label\": \"9\",\n          \"active\": false\n      },\n      {\n          \"url\": \"http:\/\/127.0.0.1:8084\/api\/upload-file\/item\/InstrumentsConsolidatedFile_20250128_1.csv?page=10\",\n          \"label\": \"10\",\n          \"active\": false\n      },\n      {\n          \"url\": null,\n          \"label\": \"...\",\n          \"active\": false\n      },\n      {\n          \"url\": \"http:\/\/127.0.0.1:8084\/api\/upload-file\/item\/InstrumentsConsolidatedFile_20250128_1.csv?page=1532\",\n          \"label\": \"1532\",\n          \"active\": false\n      },\n      {\n          \"url\": \"http:\/\/127.0.0.1:8084\/api\/upload-file\/item\/InstrumentsConsolidatedFile_20250128_1.csv?page=1533\",\n          \"label\": \"1533\",\n          \"active\": false\n      },\n      {\n          \"url\": \"http:\/\/127.0.0.1:8084\/api\/upload-file\/item\/InstrumentsConsolidatedFile_20250128_1.csv?page=2\",\n          \"label\": \"Next &raquo;\",\n          \"active\": false\n      }\n  ],\n  \"next_page_url\": \"http:\/\/127.0.0.1:8084\/api\/upload-file\/item\/InstrumentsConsolidatedFile_20250128_1.csv?page=2\",\n  \"path\": \"http:\/\/127.0.0.1:8084\/api\/upload-file\/item\/InstrumentsConsolidatedFile_20250128_1.csv\",\n  \"per_page\": 50,\n  \"prev_page_url\": null,\n  \"to\": 50,\n  \"total\": 76643\n}\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n     \"message\": \"Unauthenticated.\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Buscar Arquivos Pela Data de Cria\u00e7\u00e3o",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/upload-file-date\/:createdDate",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/upload-file-date\/:createdDate",
+                            "variable": [
+                                {
+                                    "id": "createdDate",
+                                    "key": "createdDate",
+                                    "value": "qui",
+                                    "description": ""
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {ACCESS_TOKEN}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "<p>Este Endpoint Realiza a Busca, e retorno das informa\u00e7\u00f5es, referente aos arquivos, pela sua data de cria\u00e7\u00e3o<\/p>."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n      \"message\": \"Documento(s) foram Encontrado(s)\",\n      \"data\": [\n          {\n              \"nome\": \"InstrumentsConsolidatedFile_20250128_1.csv\",\n              \"status\": \"PROCESSADO\",\n              \"data_criacao\": \"02-02-2025 16:47:49\"\n          }\n      ]\n  }",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 400,
+                            "body": "{\n      \"message\": \"A Data Passada N\u00e3o \u00e9 V\u00e1lida, ou N\u00e3o est\u00e1 no formato Solicitado Y-m-d\",\n      \"data\": []\n  }",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n     \"message\": \"Unauthenticated.\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n     \"message\": \"N\u00e3o foi Encontrado Nenhum Documento Adicionando no Dia Solicitado\"\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "noauth"
+    }
+}

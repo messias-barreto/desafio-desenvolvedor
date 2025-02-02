@@ -1,0 +1,446 @@
+name: Endpoints
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - POST
+    uri: api/upload-file
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Realizar o Upload do Arquivo'
+      description: '<p>Este Endpoint Realiza o <strong>Upload e Processamento do Arquivo</strong>. É Necessário para um valor chamado <strong>arquivo</strong> no body da requisição, nos formatos CSV ou XLSX</p>.'
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {ACCESS_TOKEN}'
+      Content-Type: multipart/form-data
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      arquivo:
+        name: arquivo
+        description: 'Must be a file. Must not be greater than 81920 kilobytes.'
+        required: true
+        example: null
+        type: file
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters: []
+    fileParameters:
+      arquivo: null
+    responses:
+      -
+        status: 201
+        content: |-
+          {
+              "message": "O Arquivo nome_arquivo Está Sendo Processado!",
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+               "message": "Unauthenticated."
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 409
+        content: |-
+          {
+               "message": "O Arquivo Enviado Já Consta em Nosso Sistema"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/upload-file/{name}'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Buscar Arquivos Por Nome'
+      description: '<p>Este Endpoint Realiza a Busca, e retorno das informações, referente aos arquivos, pelo nome do Arquivo</p>.'
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {ACCESS_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      name:
+        name: name
+        description: ''
+        required: true
+        example: et
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      name: et
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+                "message": "Documento(s) foram Encontrado(s)",
+                "data": [
+                    {
+                        "nome": "InstrumentsConsolidatedFile_20250128_1.csv",
+                        "status": "PROCESSADO",
+                        "data_criacao": "02-02-2025 16:47:49"
+                    }
+                ]
+            }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 200
+        content: |-
+          {
+                "message": ""message": "Não foi Encontrado Nenhum Arquivo com Esse Nome",
+            }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+               "message": "Unauthenticated."
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/upload-file/item/{name}'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Buscar Informações do Arquivo'
+      description: '<p>Este Endpoint Realiza a Busca, e retorno das informações, referente aos itens(linhas) do arquivos, podendo passar os filtros de busca pelo params</p>.'
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {ACCESS_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      name:
+        name: name
+        description: ''
+        required: true
+        example: facilis
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      name: facilis
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+          "message": "Itens Foram Encontrados com Sucesso",
+          "arquivo": "InstrumentsConsolidatedFile_20250128_1.csv",
+          "data": {
+            "current_page": 1,
+            "data": [
+                {
+                    "id": 2204372,
+                    "RptDt": "2025-01-28",
+                    "TckrSymb": "003H11",
+                    "Asst": "003H",
+                    "AsstDesc": "003H",
+                    "SgmtNm": "CASH",
+                    "MktNm": "EQUITY-CASH",
+                    "SctyCtgyNm": "FUNDS",
+                    "XprtnDt": "",
+                    "XprtnCd": "",
+                    "TradgStartDt": "9999-12-31",
+                    "TradgEndDt": "9999-12-31",
+                    "BaseCd": "",
+                    "ConvsCritNm": "",
+                    "MtrtyDtTrgtPt": "",
+                    "ReqrdConvsInd": "",
+                    "ISIN": "BR003HCTF006",
+                    "CFICd": "CICGRY",
+                    "DlvryNtceStartDt": "",
+                    "DlvryNtceEndDt": "",
+                    "OptnTp": "",
+                    "CtrctMltplr": "",
+                    "AsstQtnQty": "",
+                    "AllcnRndLot": "1",
+                    "TradgCcy": "BRL",
+                    "DlvryTpNm": "",
+                    "WdrwlDays": "",
+                    "WrkgDays": "",
+                    "ClnrDays": "",
+                    "RlvrBasePricNm": "",
+                    "OpngFutrPosDay": "",
+                    "SdTpCd1": "",
+                    "UndrlygTckrSymb1": "",
+                    "SdTpCd2": "",
+                    "UndrlygTckrSymb2": "",
+                    "PureGoldWght": "",
+                    "ExrcPric": "",
+                    "OptnStyle": "",
+                    "ValTpNm": "",
+                    "PrmUpfrntInd": "",
+                    "OpngPosLmtDt": "",
+                    "DstrbtnId": "100",
+                    "PricFctr": "1",
+                    "DaysToSttlm": "2",
+                    "SrsTpNm": "",
+                    "PrtcnFlg": "",
+                    "AutomtcExrcInd": "",
+                    "SpcfctnCd": "CI",
+                    "CrpnNm": "KINEA CO-INVESTIMENTO FDO INV IMOB",
+                    "CorpActnStartDt": "9999-12-31",
+                    "CtdyTrtmntTpNm": "FUNGIBLE",
+                    "MktCptlstn": "15000",
+                   "CorpGovnLvlNm": "",
+                    "upload_file_id": 122,
+                    "created_at": null,
+                    "updated_at": null
+                },
+                ...
+            ],
+            "first_page_url": "http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=1",
+            "from": 1,
+            "last_page": 1533,
+            "last_page_url": "http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=1533",
+            "links": [
+                {
+                    "url": null,
+                    "label": "&laquo; Previous",
+                    "active": false
+                },
+                {
+                    "url": "http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=1",
+                    "label": "1",
+                    "active": true
+                },
+                {
+                    "url": "http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=2",
+                    "label": "2",
+                    "active": false
+                },
+                {
+                    "url": "http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=3",
+                    "label": "3",
+                    "active": false
+                },
+                {
+                    "url": "http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=4",
+                    "label": "4",
+                    "active": false
+                },
+                {
+                    "url": "http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=5",
+                    "label": "5",
+                    "active": false
+                },
+                {
+                    "url": "http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=6",
+                    "label": "6",
+                    "active": false
+                },
+                {
+                    "url": "http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=7",
+                    "label": "7",
+                    "active": false
+                },
+                {
+                    "url": "http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=8",
+                    "label": "8",
+                    "active": false
+                },
+                {
+                    "url": "http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=9",
+                    "label": "9",
+                    "active": false
+                },
+                {
+                    "url": "http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=10",
+                    "label": "10",
+                    "active": false
+                },
+                {
+                    "url": null,
+                    "label": "...",
+                    "active": false
+                },
+                {
+                    "url": "http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=1532",
+                    "label": "1532",
+                    "active": false
+                },
+                {
+                    "url": "http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=1533",
+                    "label": "1533",
+                    "active": false
+                },
+                {
+                    "url": "http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=2",
+                    "label": "Next &raquo;",
+                    "active": false
+                }
+            ],
+            "next_page_url": "http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=2",
+            "path": "http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv",
+            "per_page": 50,
+            "prev_page_url": null,
+            "to": 50,
+            "total": 76643
+          }
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+               "message": "Unauthenticated."
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/upload-file-date/{createdDate}'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Buscar Arquivos Pela Data de Criação'
+      description: '<p>Este Endpoint Realiza a Busca, e retorno das informações, referente aos arquivos, pela sua data de criação</p>.'
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {ACCESS_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      createdDate:
+        name: createdDate
+        description: ''
+        required: true
+        example: qui
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      createdDate: qui
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+                "message": "Documento(s) foram Encontrado(s)",
+                "data": [
+                    {
+                        "nome": "InstrumentsConsolidatedFile_20250128_1.csv",
+                        "status": "PROCESSADO",
+                        "data_criacao": "02-02-2025 16:47:49"
+                    }
+                ]
+            }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 400
+        content: |-
+          {
+                "message": "A Data Passada Não é Válida, ou Não está no formato Solicitado Y-m-d",
+                "data": []
+            }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+               "message": "Unauthenticated."
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 404
+        content: |-
+          {
+               "message": "Não foi Encontrado Nenhum Documento Adicionando no Dia Solicitado"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []

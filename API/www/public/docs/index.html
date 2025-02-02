@@ -1,0 +1,952 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Desafio Desenvolvedor - Oliveira Trust Documentation</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../docs/css/theme-default.style.css" media="screen">
+    <link rel="stylesheet" href="../docs/css/theme-default.print.css" media="print">
+
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/@highlightjs/cdn-assets@11.6.0/styles/obsidian.min.css">
+    <script src="https://unpkg.com/@highlightjs/cdn-assets@11.6.0/highlight.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jets/0.14.1/jets.min.js"></script>
+
+    <style id="language-style">
+        /* starts out as display none and is replaced with js later  */
+                    body .content .bash-example code { display: none; }
+                    body .content .javascript-example code { display: none; }
+            </style>
+
+    <script>
+        var tryItOutBaseUrl = "http://localhost:8084";
+        var useCsrf = Boolean();
+        var csrfUrl = "/sanctum/csrf-cookie";
+    </script>
+    <script src="../docs/js/tryitout-4.39.0.js"></script>
+
+    <script src="../docs/js/theme-default-4.39.0.js"></script>
+
+</head>
+
+<body data-languages="[&quot;bash&quot;,&quot;javascript&quot;]">
+
+<a href="#" id="nav-button">
+    <span>
+        MENU
+        <img src="../docs/images/navbar.png" alt="navbar-image"/>
+    </span>
+</a>
+<div class="tocify-wrapper">
+    
+            <div class="lang-selector">
+                                            <button type="button" class="lang-button" data-language-name="bash">bash</button>
+                                            <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
+                    </div>
+    
+    <div class="search">
+        <input type="text" class="search" id="input-search" placeholder="Search">
+    </div>
+
+    <div id="toc">
+                    <ul id="tocify-header-introducao" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="introducao">
+                    <a href="#introducao">Introdução</a>
+                </li>
+                            </ul>
+                    <ul id="tocify-header-autenticando-requisicoes" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="autenticando-requisicoes">
+                    <a href="#autenticando-requisicoes">Autenticando Requisições</a>
+                </li>
+                            </ul>
+                    <ul id="tocify-header-endpoints" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="endpoints">
+                    <a href="#endpoints">Endpoints</a>
+                </li>
+                                    <ul id="tocify-subheader-endpoints" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-upload-file">
+                                <a href="#endpoints-POSTapi-upload-file">Realizar o Upload do Arquivo</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-upload-file--name-">
+                                <a href="#endpoints-GETapi-upload-file--name-">Buscar Arquivos Por Nome</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-upload-file-item--name-">
+                                <a href="#endpoints-GETapi-upload-file-item--name-">Buscar Informações do Arquivo</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-upload-file-date--createdDate-">
+                                <a href="#endpoints-GETapi-upload-file-date--createdDate-">Buscar Arquivos Pela Data de Criação</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+            </div>
+
+    <ul class="toc-footer" id="toc-footer">
+                    <li style="padding-bottom: 5px;"><a href="../docs/collection.json">View Postman collection</a></li>
+                            <li style="padding-bottom: 5px;"><a href="../docs/openapi.yaml">View OpenAPI spec</a></li>
+                <li><a href="http://github.com/knuckleswtf/scribe">Documentation powered by Scribe ✍</a></li>
+    </ul>
+
+    <ul class="toc-footer" id="last-updated">
+        <li>Last updated: February 2, 2025</li>
+    </ul>
+</div>
+
+<div class="page-wrapper">
+    <div class="dark-box"></div>
+    <div class="content">
+        <h1 id="introducao">Introdução</h1>
+<aside>
+    <strong>Base URL</strong>: <code>http://127.0.0.1:8084</code>
+</aside>
+<p>Este documento foi elaborado para apresentar as informações essenciais necessárias para o consumo adequado da API.</p>
+<p>A Finalidade da API: </p>
+<ul>
+<li>Realizar o Upload e Processamento de Arquivos CSV e XLSX enviados e armazenar as Informações no Banco de Dados </li>
+<li>Realizar a Consulta das Informações Do Documento Armazenado </li>
+</ul>
+
+        <h1 id="autenticando-requisicoes">Autenticando Requisições</h1>
+<p>Para autenticar requisições, inclua um cabeçalho <strong>Authorization</strong> com o valor <strong>&quot;Bearer {ACCESS_TOKEN}&quot;</strong>.</p>
+<p>Obtenha o token de acesso através do endpoint <strong>POST /oauth/token</strong></p>
+<p>Todos os endpoints que precisam de autenticação estão marcados com um selo requires authentication na documentação abaixo.</p>
+
+        <h1 id="endpoints">Endpoints</h1>
+
+    
+
+                                <h2 id="endpoints-POSTapi-upload-file">Realizar o Upload do Arquivo</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Este Endpoint Realiza o <strong>Upload e Processamento do Arquivo</strong>. É Necessário para um valor chamado <strong>arquivo</strong> no body da requisição, nos formatos CSV ou XLSX</p>.
+
+<span id="example-requests-POSTapi-upload-file">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8084/api/upload-file" \
+    --header "Authorization: Bearer {ACCESS_TOKEN}" \
+    --header "Content-Type: multipart/form-data" \
+    --header "Accept: application/json" \
+    --form "arquivo=@/tmp/phpYQJzun" </code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8084/api/upload-file"
+);
+
+const headers = {
+    "Authorization": "Bearer {ACCESS_TOKEN}",
+    "Content-Type": "multipart/form-data",
+    "Accept": "application/json",
+};
+
+const body = new FormData();
+body.append('arquivo', document.querySelector('input[name="arquivo"]').files[0]);
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-upload-file">
+            <blockquote>
+            <p>Example response (201):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;O Arquivo nome_arquivo Est&aacute; Sendo Processado!&quot;,
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (409):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;O Arquivo Enviado J&aacute; Consta em Nosso Sistema&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-upload-file" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-upload-file"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-upload-file"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-upload-file" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-upload-file">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-upload-file" data-method="POST"
+      data-path="api/upload-file"
+      data-authed="1"
+      data-hasfiles="1"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-upload-file', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-upload-file"
+                    onclick="tryItOut('POSTapi-upload-file');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-upload-file"
+                    onclick="cancelTryOut('POSTapi-upload-file');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-upload-file"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/upload-file</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-upload-file"
+               value="Bearer {ACCESS_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {ACCESS_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-upload-file"
+               value="multipart/form-data"
+               data-component="header">
+    <br>
+<p>Example: <code>multipart/form-data</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-upload-file"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>arquivo</code></b>&nbsp;&nbsp;
+<small>file</small>&nbsp;
+ &nbsp;
+                <input type="file" style="display: none"
+                              name="arquivo"                data-endpoint="POSTapi-upload-file"
+               value=""
+               data-component="body">
+    <br>
+<p>Must be a file. Must not be greater than 81920 kilobytes. Example: <code>/tmp/phpYQJzun</code></p>
+        </div>
+        </form>
+
+                    <h2 id="endpoints-GETapi-upload-file--name-">Buscar Arquivos Por Nome</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Este Endpoint Realiza a Busca, e retorno das informações, referente aos arquivos, pelo nome do Arquivo</p>.
+
+<span id="example-requests-GETapi-upload-file--name-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8084/api/upload-file/et" \
+    --header "Authorization: Bearer {ACCESS_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8084/api/upload-file/et"
+);
+
+const headers = {
+    "Authorization": "Bearer {ACCESS_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-upload-file--name-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Documento(s) foram Encontrado(s)&quot;,
+    &quot;data&quot;: [
+        {
+            &quot;nome&quot;: &quot;InstrumentsConsolidatedFile_20250128_1.csv&quot;,
+            &quot;status&quot;: &quot;PROCESSADO&quot;,
+            &quot;data_criacao&quot;: &quot;02-02-2025 16:47:49&quot;
+        }
+    ]
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+      &quot;message&quot;: &quot;&quot;message&quot;: &quot;N&atilde;o foi Encontrado Nenhum Arquivo com Esse Nome&quot;,
+  }</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-upload-file--name-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-upload-file--name-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-upload-file--name-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-upload-file--name-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-upload-file--name-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-upload-file--name-" data-method="GET"
+      data-path="api/upload-file/{name}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-upload-file--name-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-upload-file--name-"
+                    onclick="tryItOut('GETapi-upload-file--name-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-upload-file--name-"
+                    onclick="cancelTryOut('GETapi-upload-file--name-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-upload-file--name-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/upload-file/{name}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-upload-file--name-"
+               value="Bearer {ACCESS_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {ACCESS_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-upload-file--name-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-upload-file--name-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="name"                data-endpoint="GETapi-upload-file--name-"
+               value="et"
+               data-component="url">
+    <br>
+<p>Example: <code>et</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="endpoints-GETapi-upload-file-item--name-">Buscar Informações do Arquivo</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Este Endpoint Realiza a Busca, e retorno das informações, referente aos itens(linhas) do arquivos, podendo passar os filtros de busca pelo params</p>.
+
+<span id="example-requests-GETapi-upload-file-item--name-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8084/api/upload-file/item/facilis" \
+    --header "Authorization: Bearer {ACCESS_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8084/api/upload-file/item/facilis"
+);
+
+const headers = {
+    "Authorization": "Bearer {ACCESS_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-upload-file-item--name-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+&quot;message&quot;: &quot;Itens Foram Encontrados com Sucesso&quot;,
+&quot;arquivo&quot;: &quot;InstrumentsConsolidatedFile_20250128_1.csv&quot;,
+&quot;data&quot;: {
+  &quot;current_page&quot;: 1,
+  &quot;data&quot;: [
+      {
+          &quot;id&quot;: 2204372,
+          &quot;RptDt&quot;: &quot;2025-01-28&quot;,
+          &quot;TckrSymb&quot;: &quot;003H11&quot;,
+          &quot;Asst&quot;: &quot;003H&quot;,
+          &quot;AsstDesc&quot;: &quot;003H&quot;,
+          &quot;SgmtNm&quot;: &quot;CASH&quot;,
+          &quot;MktNm&quot;: &quot;EQUITY-CASH&quot;,
+          &quot;SctyCtgyNm&quot;: &quot;FUNDS&quot;,
+          &quot;XprtnDt&quot;: &quot;&quot;,
+          &quot;XprtnCd&quot;: &quot;&quot;,
+          &quot;TradgStartDt&quot;: &quot;9999-12-31&quot;,
+          &quot;TradgEndDt&quot;: &quot;9999-12-31&quot;,
+          &quot;BaseCd&quot;: &quot;&quot;,
+          &quot;ConvsCritNm&quot;: &quot;&quot;,
+          &quot;MtrtyDtTrgtPt&quot;: &quot;&quot;,
+          &quot;ReqrdConvsInd&quot;: &quot;&quot;,
+          &quot;ISIN&quot;: &quot;BR003HCTF006&quot;,
+          &quot;CFICd&quot;: &quot;CICGRY&quot;,
+          &quot;DlvryNtceStartDt&quot;: &quot;&quot;,
+          &quot;DlvryNtceEndDt&quot;: &quot;&quot;,
+          &quot;OptnTp&quot;: &quot;&quot;,
+          &quot;CtrctMltplr&quot;: &quot;&quot;,
+          &quot;AsstQtnQty&quot;: &quot;&quot;,
+          &quot;AllcnRndLot&quot;: &quot;1&quot;,
+          &quot;TradgCcy&quot;: &quot;BRL&quot;,
+          &quot;DlvryTpNm&quot;: &quot;&quot;,
+          &quot;WdrwlDays&quot;: &quot;&quot;,
+          &quot;WrkgDays&quot;: &quot;&quot;,
+          &quot;ClnrDays&quot;: &quot;&quot;,
+          &quot;RlvrBasePricNm&quot;: &quot;&quot;,
+          &quot;OpngFutrPosDay&quot;: &quot;&quot;,
+          &quot;SdTpCd1&quot;: &quot;&quot;,
+          &quot;UndrlygTckrSymb1&quot;: &quot;&quot;,
+          &quot;SdTpCd2&quot;: &quot;&quot;,
+          &quot;UndrlygTckrSymb2&quot;: &quot;&quot;,
+          &quot;PureGoldWght&quot;: &quot;&quot;,
+          &quot;ExrcPric&quot;: &quot;&quot;,
+          &quot;OptnStyle&quot;: &quot;&quot;,
+          &quot;ValTpNm&quot;: &quot;&quot;,
+          &quot;PrmUpfrntInd&quot;: &quot;&quot;,
+          &quot;OpngPosLmtDt&quot;: &quot;&quot;,
+          &quot;DstrbtnId&quot;: &quot;100&quot;,
+          &quot;PricFctr&quot;: &quot;1&quot;,
+          &quot;DaysToSttlm&quot;: &quot;2&quot;,
+          &quot;SrsTpNm&quot;: &quot;&quot;,
+          &quot;PrtcnFlg&quot;: &quot;&quot;,
+          &quot;AutomtcExrcInd&quot;: &quot;&quot;,
+          &quot;SpcfctnCd&quot;: &quot;CI&quot;,
+          &quot;CrpnNm&quot;: &quot;KINEA CO-INVESTIMENTO FDO INV IMOB&quot;,
+          &quot;CorpActnStartDt&quot;: &quot;9999-12-31&quot;,
+          &quot;CtdyTrtmntTpNm&quot;: &quot;FUNGIBLE&quot;,
+          &quot;MktCptlstn&quot;: &quot;15000&quot;,
+         &quot;CorpGovnLvlNm&quot;: &quot;&quot;,
+          &quot;upload_file_id&quot;: 122,
+          &quot;created_at&quot;: null,
+          &quot;updated_at&quot;: null
+      },
+      ...
+  ],
+  &quot;first_page_url&quot;: &quot;http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=1&quot;,
+  &quot;from&quot;: 1,
+  &quot;last_page&quot;: 1533,
+  &quot;last_page_url&quot;: &quot;http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=1533&quot;,
+  &quot;links&quot;: [
+      {
+          &quot;url&quot;: null,
+          &quot;label&quot;: &quot;&amp;laquo; Previous&quot;,
+          &quot;active&quot;: false
+      },
+      {
+          &quot;url&quot;: &quot;http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=1&quot;,
+          &quot;label&quot;: &quot;1&quot;,
+          &quot;active&quot;: true
+      },
+      {
+          &quot;url&quot;: &quot;http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=2&quot;,
+          &quot;label&quot;: &quot;2&quot;,
+          &quot;active&quot;: false
+      },
+      {
+          &quot;url&quot;: &quot;http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=3&quot;,
+          &quot;label&quot;: &quot;3&quot;,
+          &quot;active&quot;: false
+      },
+      {
+          &quot;url&quot;: &quot;http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=4&quot;,
+          &quot;label&quot;: &quot;4&quot;,
+          &quot;active&quot;: false
+      },
+      {
+          &quot;url&quot;: &quot;http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=5&quot;,
+          &quot;label&quot;: &quot;5&quot;,
+          &quot;active&quot;: false
+      },
+      {
+          &quot;url&quot;: &quot;http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=6&quot;,
+          &quot;label&quot;: &quot;6&quot;,
+          &quot;active&quot;: false
+      },
+      {
+          &quot;url&quot;: &quot;http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=7&quot;,
+          &quot;label&quot;: &quot;7&quot;,
+          &quot;active&quot;: false
+      },
+      {
+          &quot;url&quot;: &quot;http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=8&quot;,
+          &quot;label&quot;: &quot;8&quot;,
+          &quot;active&quot;: false
+      },
+      {
+          &quot;url&quot;: &quot;http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=9&quot;,
+          &quot;label&quot;: &quot;9&quot;,
+          &quot;active&quot;: false
+      },
+      {
+          &quot;url&quot;: &quot;http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=10&quot;,
+          &quot;label&quot;: &quot;10&quot;,
+          &quot;active&quot;: false
+      },
+      {
+          &quot;url&quot;: null,
+          &quot;label&quot;: &quot;...&quot;,
+          &quot;active&quot;: false
+      },
+      {
+          &quot;url&quot;: &quot;http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=1532&quot;,
+          &quot;label&quot;: &quot;1532&quot;,
+          &quot;active&quot;: false
+      },
+      {
+          &quot;url&quot;: &quot;http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=1533&quot;,
+          &quot;label&quot;: &quot;1533&quot;,
+          &quot;active&quot;: false
+      },
+      {
+          &quot;url&quot;: &quot;http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=2&quot;,
+          &quot;label&quot;: &quot;Next &amp;raquo;&quot;,
+          &quot;active&quot;: false
+      }
+  ],
+  &quot;next_page_url&quot;: &quot;http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=2&quot;,
+  &quot;path&quot;: &quot;http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv&quot;,
+  &quot;per_page&quot;: 50,
+  &quot;prev_page_url&quot;: null,
+  &quot;to&quot;: 50,
+  &quot;total&quot;: 76643
+}
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-upload-file-item--name-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-upload-file-item--name-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-upload-file-item--name-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-upload-file-item--name-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-upload-file-item--name-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-upload-file-item--name-" data-method="GET"
+      data-path="api/upload-file/item/{name}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-upload-file-item--name-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-upload-file-item--name-"
+                    onclick="tryItOut('GETapi-upload-file-item--name-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-upload-file-item--name-"
+                    onclick="cancelTryOut('GETapi-upload-file-item--name-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-upload-file-item--name-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/upload-file/item/{name}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-upload-file-item--name-"
+               value="Bearer {ACCESS_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {ACCESS_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-upload-file-item--name-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-upload-file-item--name-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="name"                data-endpoint="GETapi-upload-file-item--name-"
+               value="facilis"
+               data-component="url">
+    <br>
+<p>Example: <code>facilis</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="endpoints-GETapi-upload-file-date--createdDate-">Buscar Arquivos Pela Data de Criação</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Este Endpoint Realiza a Busca, e retorno das informações, referente aos arquivos, pela sua data de criação</p>.
+
+<span id="example-requests-GETapi-upload-file-date--createdDate-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8084/api/upload-file-date/qui" \
+    --header "Authorization: Bearer {ACCESS_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8084/api/upload-file-date/qui"
+);
+
+const headers = {
+    "Authorization": "Bearer {ACCESS_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-upload-file-date--createdDate-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Documento(s) foram Encontrado(s)&quot;,
+    &quot;data&quot;: [
+        {
+            &quot;nome&quot;: &quot;InstrumentsConsolidatedFile_20250128_1.csv&quot;,
+            &quot;status&quot;: &quot;PROCESSADO&quot;,
+            &quot;data_criacao&quot;: &quot;02-02-2025 16:47:49&quot;
+        }
+    ]
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;A Data Passada N&atilde;o &eacute; V&aacute;lida, ou N&atilde;o est&aacute; no formato Solicitado Y-m-d&quot;,
+    &quot;data&quot;: []
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;N&atilde;o foi Encontrado Nenhum Documento Adicionando no Dia Solicitado&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-upload-file-date--createdDate-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-upload-file-date--createdDate-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-upload-file-date--createdDate-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-upload-file-date--createdDate-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-upload-file-date--createdDate-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-upload-file-date--createdDate-" data-method="GET"
+      data-path="api/upload-file-date/{createdDate}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-upload-file-date--createdDate-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-upload-file-date--createdDate-"
+                    onclick="tryItOut('GETapi-upload-file-date--createdDate-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-upload-file-date--createdDate-"
+                    onclick="cancelTryOut('GETapi-upload-file-date--createdDate-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-upload-file-date--createdDate-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/upload-file-date/{createdDate}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-upload-file-date--createdDate-"
+               value="Bearer {ACCESS_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {ACCESS_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-upload-file-date--createdDate-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-upload-file-date--createdDate-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>createdDate</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="createdDate"                data-endpoint="GETapi-upload-file-date--createdDate-"
+               value="qui"
+               data-component="url">
+    <br>
+<p>Example: <code>qui</code></p>
+            </div>
+                    </form>
+
+            
+
+        
+    </div>
+    <div class="dark-box">
+                    <div class="lang-selector">
+                                                        <button type="button" class="lang-button" data-language-name="bash">bash</button>
+                                                        <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
+                            </div>
+            </div>
+</div>
+</body>
+</html>

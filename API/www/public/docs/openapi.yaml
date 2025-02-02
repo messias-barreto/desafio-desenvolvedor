@@ -1,0 +1,264 @@
+openapi: 3.0.3
+info:
+  title: 'Desafio Desenvolvedor - Oliveira Trust'
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost:8084'
+paths:
+  /api/upload-file:
+    post:
+      summary: 'Realizar o Upload do Arquivo'
+      operationId: realizarOUploadDoArquivo
+      description: '<p>Este Endpoint Realiza o <strong>Upload e Processamento do Arquivo</strong>. É Necessário para um valor chamado <strong>arquivo</strong> no body da requisição, nos formatos CSV ou XLSX</p>.'
+      parameters: []
+      responses:
+        201:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n    \"message\": \"O Arquivo nome_arquivo Está Sendo Processado!\",\n}"
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+        409:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'O Arquivo Enviado Já Consta em Nosso Sistema'
+                properties:
+                  message:
+                    type: string
+                    example: 'O Arquivo Enviado Já Consta em Nosso Sistema'
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                arquivo:
+                  type: string
+                  format: binary
+                  description: 'Must be a file. Must not be greater than 81920 kilobytes.'
+                  nullable: false
+              required:
+                - arquivo
+  '/api/upload-file/{name}':
+    get:
+      summary: 'Buscar Arquivos Por Nome'
+      operationId: buscarArquivosPorNome
+      description: '<p>Este Endpoint Realiza a Busca, e retorno das informações, referente aos arquivos, pelo nome do Arquivo</p>.'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Documento(s) foram Encontrado(s)'
+                  data:
+                    -
+                      nome: InstrumentsConsolidatedFile_20250128_1.csv
+                      status: PROCESSADO
+                      data_criacao: '02-02-2025 16:47:49'
+                properties:
+                  message:
+                    type: string
+                    example: 'Documento(s) foram Encontrado(s)'
+                  data:
+                    type: array
+                    example:
+                      -
+                        nome: InstrumentsConsolidatedFile_20250128_1.csv
+                        status: PROCESSADO
+                        data_criacao: '02-02-2025 16:47:49'
+                    items:
+                      type: object
+                      properties:
+                        nome:
+                          type: string
+                          example: InstrumentsConsolidatedFile_20250128_1.csv
+                        status:
+                          type: string
+                          example: PROCESSADO
+                        data_criacao:
+                          type: string
+                          example: '02-02-2025 16:47:49'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: name
+        description: ''
+        example: et
+        required: true
+        schema:
+          type: string
+  '/api/upload-file/item/{name}':
+    get:
+      summary: 'Buscar Informações do Arquivo'
+      operationId: buscarInformaesDoArquivo
+      description: '<p>Este Endpoint Realiza a Busca, e retorno das informações, referente aos itens(linhas) do arquivos, podendo passar os filtros de busca pelo params</p>.'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n\"message\": \"Itens Foram Encontrados com Sucesso\",\n\"arquivo\": \"InstrumentsConsolidatedFile_20250128_1.csv\",\n\"data\": {\n  \"current_page\": 1,\n  \"data\": [\n      {\n          \"id\": 2204372,\n          \"RptDt\": \"2025-01-28\",\n          \"TckrSymb\": \"003H11\",\n          \"Asst\": \"003H\",\n          \"AsstDesc\": \"003H\",\n          \"SgmtNm\": \"CASH\",\n          \"MktNm\": \"EQUITY-CASH\",\n          \"SctyCtgyNm\": \"FUNDS\",\n          \"XprtnDt\": \"\",\n          \"XprtnCd\": \"\",\n          \"TradgStartDt\": \"9999-12-31\",\n          \"TradgEndDt\": \"9999-12-31\",\n          \"BaseCd\": \"\",\n          \"ConvsCritNm\": \"\",\n          \"MtrtyDtTrgtPt\": \"\",\n          \"ReqrdConvsInd\": \"\",\n          \"ISIN\": \"BR003HCTF006\",\n          \"CFICd\": \"CICGRY\",\n          \"DlvryNtceStartDt\": \"\",\n          \"DlvryNtceEndDt\": \"\",\n          \"OptnTp\": \"\",\n          \"CtrctMltplr\": \"\",\n          \"AsstQtnQty\": \"\",\n          \"AllcnRndLot\": \"1\",\n          \"TradgCcy\": \"BRL\",\n          \"DlvryTpNm\": \"\",\n          \"WdrwlDays\": \"\",\n          \"WrkgDays\": \"\",\n          \"ClnrDays\": \"\",\n          \"RlvrBasePricNm\": \"\",\n          \"OpngFutrPosDay\": \"\",\n          \"SdTpCd1\": \"\",\n          \"UndrlygTckrSymb1\": \"\",\n          \"SdTpCd2\": \"\",\n          \"UndrlygTckrSymb2\": \"\",\n          \"PureGoldWght\": \"\",\n          \"ExrcPric\": \"\",\n          \"OptnStyle\": \"\",\n          \"ValTpNm\": \"\",\n          \"PrmUpfrntInd\": \"\",\n          \"OpngPosLmtDt\": \"\",\n          \"DstrbtnId\": \"100\",\n          \"PricFctr\": \"1\",\n          \"DaysToSttlm\": \"2\",\n          \"SrsTpNm\": \"\",\n          \"PrtcnFlg\": \"\",\n          \"AutomtcExrcInd\": \"\",\n          \"SpcfctnCd\": \"CI\",\n          \"CrpnNm\": \"KINEA CO-INVESTIMENTO FDO INV IMOB\",\n          \"CorpActnStartDt\": \"9999-12-31\",\n          \"CtdyTrtmntTpNm\": \"FUNGIBLE\",\n          \"MktCptlstn\": \"15000\",\n         \"CorpGovnLvlNm\": \"\",\n          \"upload_file_id\": 122,\n          \"created_at\": null,\n          \"updated_at\": null\n      },\n      ...\n  ],\n  \"first_page_url\": \"http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=1\",\n  \"from\": 1,\n  \"last_page\": 1533,\n  \"last_page_url\": \"http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=1533\",\n  \"links\": [\n      {\n          \"url\": null,\n          \"label\": \"&laquo; Previous\",\n          \"active\": false\n      },\n      {\n          \"url\": \"http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=1\",\n          \"label\": \"1\",\n          \"active\": true\n      },\n      {\n          \"url\": \"http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=2\",\n          \"label\": \"2\",\n          \"active\": false\n      },\n      {\n          \"url\": \"http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=3\",\n          \"label\": \"3\",\n          \"active\": false\n      },\n      {\n          \"url\": \"http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=4\",\n          \"label\": \"4\",\n          \"active\": false\n      },\n      {\n          \"url\": \"http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=5\",\n          \"label\": \"5\",\n          \"active\": false\n      },\n      {\n          \"url\": \"http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=6\",\n          \"label\": \"6\",\n          \"active\": false\n      },\n      {\n          \"url\": \"http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=7\",\n          \"label\": \"7\",\n          \"active\": false\n      },\n      {\n          \"url\": \"http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=8\",\n          \"label\": \"8\",\n          \"active\": false\n      },\n      {\n          \"url\": \"http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=9\",\n          \"label\": \"9\",\n          \"active\": false\n      },\n      {\n          \"url\": \"http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=10\",\n          \"label\": \"10\",\n          \"active\": false\n      },\n      {\n          \"url\": null,\n          \"label\": \"...\",\n          \"active\": false\n      },\n      {\n          \"url\": \"http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=1532\",\n          \"label\": \"1532\",\n          \"active\": false\n      },\n      {\n          \"url\": \"http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=1533\",\n          \"label\": \"1533\",\n          \"active\": false\n      },\n      {\n          \"url\": \"http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=2\",\n          \"label\": \"Next &raquo;\",\n          \"active\": false\n      }\n  ],\n  \"next_page_url\": \"http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv?page=2\",\n  \"path\": \"http://127.0.0.1:8084/api/upload-file/item/InstrumentsConsolidatedFile_20250128_1.csv\",\n  \"per_page\": 50,\n  \"prev_page_url\": null,\n  \"to\": 50,\n  \"total\": 76643\n}\n}"
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: name
+        description: ''
+        example: facilis
+        required: true
+        schema:
+          type: string
+  '/api/upload-file-date/{createdDate}':
+    get:
+      summary: 'Buscar Arquivos Pela Data de Criação'
+      operationId: buscarArquivosPelaDataDeCriao
+      description: '<p>Este Endpoint Realiza a Busca, e retorno das informações, referente aos arquivos, pela sua data de criação</p>.'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Documento(s) foram Encontrado(s)'
+                  data:
+                    -
+                      nome: InstrumentsConsolidatedFile_20250128_1.csv
+                      status: PROCESSADO
+                      data_criacao: '02-02-2025 16:47:49'
+                properties:
+                  message:
+                    type: string
+                    example: 'Documento(s) foram Encontrado(s)'
+                  data:
+                    type: array
+                    example:
+                      -
+                        nome: InstrumentsConsolidatedFile_20250128_1.csv
+                        status: PROCESSADO
+                        data_criacao: '02-02-2025 16:47:49'
+                    items:
+                      type: object
+                      properties:
+                        nome:
+                          type: string
+                          example: InstrumentsConsolidatedFile_20250128_1.csv
+                        status:
+                          type: string
+                          example: PROCESSADO
+                        data_criacao:
+                          type: string
+                          example: '02-02-2025 16:47:49'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'A Data Passada Não é Válida, ou Não está no formato Solicitado Y-m-d'
+                  data: []
+                properties:
+                  message:
+                    type: string
+                    example: 'A Data Passada Não é Válida, ou Não está no formato Solicitado Y-m-d'
+                  data:
+                    type: array
+                    example: []
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Não foi Encontrado Nenhum Documento Adicionando no Dia Solicitado'
+                properties:
+                  message:
+                    type: string
+                    example: 'Não foi Encontrado Nenhum Documento Adicionando no Dia Solicitado'
+      tags:
+        - Endpoints
+    parameters:
+      -
+        in: path
+        name: createdDate
+        description: ''
+        example: qui
+        required: true
+        schema:
+          type: string
+tags:
+  -
+    name: Endpoints
+    description: ''
