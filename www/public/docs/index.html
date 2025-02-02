@@ -65,6 +65,11 @@
                 <li class="tocify-item level-1" data-unique="autenticando-requisicoes">
                     <a href="#autenticando-requisicoes">Autenticando Requisições</a>
                 </li>
+                                    <ul id="tocify-subheader-autenticando-requisicoes" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="gerar-o-token-de-acesso">
+                                <a href="#gerar-o-token-de-acesso">💳 Gerar o Token de Acesso</a>
+                            </li>
+                                                                        </ul>
                             </ul>
                     <ul id="tocify-header-endpoints" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="endpoints">
@@ -116,6 +121,25 @@
 <p>Para autenticar requisições, inclua um cabeçalho <strong>Authorization</strong> com o valor <strong>&quot;Bearer {ACCESS_TOKEN}&quot;</strong>.</p>
 <p>Obtenha o token de acesso através do endpoint <strong>POST /oauth/token</strong></p>
 <p>Todos os endpoints que precisam de autenticação estão marcados com um selo requires authentication na documentação abaixo.</p>
+<h2 id="gerar-o-token-de-acesso">💳 Gerar o Token de Acesso</h2>
+<p>Para gerar o <strong>Token de Acesso</strong>, você precisará dos seguintes parâmetros:  </p>
+<ul>
+<li><strong>client_id</strong> 🆔  </li>
+<li><strong>client_secret</strong> 🔑  </li>
+</ul>
+<h3 id="exemplo-de-requisicao">📌 Exemplo de Requisição</h3>
+<pre><code class="language-json">{
+    "grant_type": "client_credentials",
+    "client_id": "9e1dca0f-8684-4b96-89e8-c8a5ad1d4eb3",
+    "client_secret": "uj1qjPFGAEbrraguEhCs4DWTPgvLvZEEVG6eg13r"
+}
+</code></pre>
+<pre><code class="language-json">
+{
+    "token_type": "Bearer",
+    "expires_in": 600,
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5ZTFkY2EwZi04Njg0LTRiOTYtODllOC1jOGE1YWQxZDRlYjMiLCJqdGkiOiJmOTdlMGJhZjU1NzQ5YWZlYWU4OGFmOTQ3MTU2NzE4NGExNGYzMjgyYTZjYzZhNzI3MmIzYzE3OTUyYTI4OGU2ODE5MjM4ZTA4MDQ5OWM3NyIsImlhdCI6MTczODUyODYyMC41MDc2OTUsIm5iZiI6MTczODUyODYyMC41MDc2OTksImV4cCI6MTczODUyOTIyMC40OTY1NDgsInN1YiI6IiIsInNjb3BlcyI6W119.bcdGxNSOF4-yPmnUxLX8eSXD6dPCvV3GrcPlBHbEs-fo2qmAsGmvs3L7B_tms9EpsMVu35vpeuSJwSGiBMLIB53FA9P27IIEKYbo3atFB6oEdI5wzD6pdJcupe5k0E_oFBDjKDTfZD1uhu-Xb5ka692VooevswK8tVeBwLJeT2-iVleI9s_4gF8CGCXlp9_RkwgpXBYMo8gBLMT9EIVGE48HwfTl8R1oofko2dYMxPuZ58fnx8QwqO_vKTMSc_vh8t02_cMbSz6vFtxwFA_UOHlfhWJUbEmChKq2I8Mrx47EKbEdxj7PWKvGPJzeq6mwCzbjUZr4Usf1qAMovxP-kCAUNMYfZLAwfzmo0MAS49l7WODorWX-Jc01tTXP4_DM6OOeLyuIw-lWorcgyk8XS9TGlwZSCSsw29dph9XECm2LElPD9oWnwAv_GQoKF775cPxn5PyARWQFnaFJXGZl7VpFe2gnJXN7Dg4FOgKh_lirok_6XsDHJSmmCqY9_FfKhTrEdlN5YHvsO7_giH08Xra-1-8DrUU5VRpwNu2uO1BGY6a8jbyRjzE7RuIHypKHOeBAlhxmzYlV8xcl_Gx8fxwldBUpmqNUJtwfgPkc50frCHDdiw2dpHxjvtSG3_c-SzAonvF59notx1npj8SFN_JRkBppZUKLSXUEBqz5tos"
+}</code></pre>
 
         <h1 id="endpoints">Endpoints</h1>
 
@@ -139,7 +163,7 @@
     --header "Authorization: Bearer {ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "arquivo=@/tmp/phpYQJzun" </code></pre></div>
+    --form "arquivo=@/tmp/phpuj7ihT" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -283,7 +307,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be a file. Must not be greater than 81920 kilobytes. Example: <code>/tmp/phpYQJzun</code></p>
+<p>Must be a file. Must not be greater than 81920 kilobytes. Example: <code>/tmp/phpuj7ihT</code></p>
         </div>
         </form>
 
@@ -301,7 +325,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8084/api/upload-file/et" \
+    --get "http://localhost:8084/api/upload-file/voluptatem" \
     --header "Authorization: Bearer {ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -309,7 +333,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8084/api/upload-file/et"
+    "http://localhost:8084/api/upload-file/voluptatem"
 );
 
 const headers = {
@@ -448,10 +472,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="name"                data-endpoint="GETapi-upload-file--name-"
-               value="et"
+               value="voluptatem"
                data-component="url">
     <br>
-<p>Example: <code>et</code></p>
+<p>Example: <code>voluptatem</code></p>
             </div>
                     </form>
 
@@ -469,7 +493,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8084/api/upload-file/item/facilis" \
+    --get "http://localhost:8084/api/upload-file/item/numquam" \
     --header "Authorization: Bearer {ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -477,7 +501,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8084/api/upload-file/item/facilis"
+    "http://localhost:8084/api/upload-file/item/numquam"
 );
 
 const headers = {
@@ -500,12 +524,12 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-&quot;message&quot;: &quot;Itens Foram Encontrados com Sucesso&quot;,
-&quot;arquivo&quot;: &quot;InstrumentsConsolidatedFile_20250128_1.csv&quot;,
-&quot;data&quot;: {
-  &quot;current_page&quot;: 1,
-  &quot;data&quot;: [
-      {
+    &quot;message&quot;: &quot;Itens Foram Encontrados com Sucesso&quot;,
+    &quot;arquivo&quot;: &quot;InstrumentsConsolidatedFile_20250128_1.csv&quot;,
+    &quot;data&quot;: {
+        &quot;current_page&quot;: 1,
+         &quot;data&quot;: [
+         {
           &quot;id&quot;: 2204372,
           &quot;RptDt&quot;: &quot;2025-01-28&quot;,
           &quot;TckrSymb&quot;: &quot;003H11&quot;,
@@ -558,7 +582,7 @@ fetch(url, {
           &quot;CorpActnStartDt&quot;: &quot;9999-12-31&quot;,
           &quot;CtdyTrtmntTpNm&quot;: &quot;FUNGIBLE&quot;,
           &quot;MktCptlstn&quot;: &quot;15000&quot;,
-         &quot;CorpGovnLvlNm&quot;: &quot;&quot;,
+          &quot;CorpGovnLvlNm&quot;: &quot;&quot;,
           &quot;upload_file_id&quot;: 122,
           &quot;created_at&quot;: null,
           &quot;updated_at&quot;: null
@@ -752,10 +776,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="name"                data-endpoint="GETapi-upload-file-item--name-"
-               value="facilis"
+               value="numquam"
                data-component="url">
     <br>
-<p>Example: <code>facilis</code></p>
+<p>Example: <code>numquam</code></p>
             </div>
                     </form>
 
@@ -773,7 +797,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8084/api/upload-file-date/qui" \
+    --get "http://localhost:8084/api/upload-file-date/occaecati" \
     --header "Authorization: Bearer {ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -781,7 +805,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8084/api/upload-file-date/qui"
+    "http://localhost:8084/api/upload-file-date/occaecati"
 );
 
 const headers = {
@@ -930,10 +954,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="createdDate"                data-endpoint="GETapi-upload-file-date--createdDate-"
-               value="qui"
+               value="occaecati"
                data-component="url">
     <br>
-<p>Example: <code>qui</code></p>
+<p>Example: <code>occaecati</code></p>
             </div>
                     </form>
 
