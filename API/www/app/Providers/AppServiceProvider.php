@@ -9,6 +9,7 @@ use App\Repository\UploadFileItemRepository;
 use App\Repository\UploadFileRepository;
 use App\Repository\UploadFileStatusRepository;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Passport\Passport;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Passport::tokensExpireIn(now()->addMinute(10));
     }
 }

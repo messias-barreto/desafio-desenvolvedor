@@ -11,7 +11,9 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
-Route::post('upload-file', [CreateNewUploadFileController::class, 'handle']);
-Route::get('upload-file/{name}', [FindUploadFileByNameController::class, 'handle']);
-Route::get('upload-file/item/{name}', [FindItemsByUploadFileNameController::class, 'handle']);
-Route::get('upload-file-date/{createdDate}', [FindUploadFileByCreatedDateController::class, 'handle']);
+Route::middleware('client')->group(function () {
+    Route::post('upload-file', [CreateNewUploadFileController::class, 'handle']);
+    Route::get('upload-file/{name}', [FindUploadFileByNameController::class, 'handle']);
+    Route::get('upload-file/item/{name}', [FindItemsByUploadFileNameController::class, 'handle']);
+    Route::get('upload-file-date/{createdDate}', [FindUploadFileByCreatedDateController::class, 'handle']);
+});
