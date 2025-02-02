@@ -88,6 +88,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-upload-file-date--createdDate-">
                                 <a href="#endpoints-GETapi-upload-file-date--createdDate-">Buscar Arquivos Pela Data de Criação</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-DELETEapi-upload-file--name-">
+                                <a href="#endpoints-DELETEapi-upload-file--name-">Deletar Arquivo</a>
+                            </li>
                                                                         </ul>
                             </ul>
             </div>
@@ -113,8 +116,10 @@
 <p>Este documento foi elaborado para apresentar as informações essenciais necessárias para o consumo adequado da API.</p>
 <p>A Finalidade da API: </p>
 <ul>
-<li>Realizar o Upload e Processamento de Arquivos CSV e XLSX enviados e armazenar as Informações no Banco de Dados </li>
+<li>Realizar o Upload e Processamento de Arquivos CSV e XLSX</li>
+<li>Armazenar as Informações no Banco de Dados </li>
 <li>Realizar a Consulta das Informações Do Documento Armazenado </li>
+<li>Remover as Informações do Arquivo no Banco de dados</li>
 </ul>
 
         <h1 id="autenticando-requisicoes">Autenticando Requisições</h1>
@@ -124,18 +129,17 @@
 <h2 id="gerar-o-token-de-acesso">💳 Gerar o Token de Acesso</h2>
 <p>Para gerar o <strong>Token de Acesso</strong>, você precisará dos seguintes parâmetros:  </p>
 <ul>
-<li><strong>client_id</strong> 🆔  </li>
-<li><strong>client_secret</strong> 🔑  </li>
+<li><strong>client_id</strong> 🆔 9e1dca0f-8684-4b96-89e8-c8a5ad1d4eb3  </li>
+<li><strong>client_secret</strong> 🔑 41251dc3-5fed-44a3-bb73-a9d13b9e13fc </li>
 </ul>
 <h3 id="exemplo-de-requisicao">📌 Exemplo de Requisição</h3>
 <pre><code class="language-json">{
     "grant_type": "client_credentials",
     "client_id": "9e1dca0f-8684-4b96-89e8-c8a5ad1d4eb3",
-    "client_secret": "uj1qjPFGAEbrraguEhCs4DWTPgvLvZEEVG6eg13r"
+    "client_secret": "41251dc3-5fed-44a3-bb73-a9d13b9e13fc"
 }
 </code></pre>
-<pre><code class="language-json">
-{
+<pre><code class="language-json">{
     "token_type": "Bearer",
     "expires_in": 600,
     "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5ZTFkY2EwZi04Njg0LTRiOTYtODllOC1jOGE1YWQxZDRlYjMiLCJqdGkiOiJmOTdlMGJhZjU1NzQ5YWZlYWU4OGFmOTQ3MTU2NzE4NGExNGYzMjgyYTZjYzZhNzI3MmIzYzE3OTUyYTI4OGU2ODE5MjM4ZTA4MDQ5OWM3NyIsImlhdCI6MTczODUyODYyMC41MDc2OTUsIm5iZiI6MTczODUyODYyMC41MDc2OTksImV4cCI6MTczODUyOTIyMC40OTY1NDgsInN1YiI6IiIsInNjb3BlcyI6W119.bcdGxNSOF4-yPmnUxLX8eSXD6dPCvV3GrcPlBHbEs-fo2qmAsGmvs3L7B_tms9EpsMVu35vpeuSJwSGiBMLIB53FA9P27IIEKYbo3atFB6oEdI5wzD6pdJcupe5k0E_oFBDjKDTfZD1uhu-Xb5ka692VooevswK8tVeBwLJeT2-iVleI9s_4gF8CGCXlp9_RkwgpXBYMo8gBLMT9EIVGE48HwfTl8R1oofko2dYMxPuZ58fnx8QwqO_vKTMSc_vh8t02_cMbSz6vFtxwFA_UOHlfhWJUbEmChKq2I8Mrx47EKbEdxj7PWKvGPJzeq6mwCzbjUZr4Usf1qAMovxP-kCAUNMYfZLAwfzmo0MAS49l7WODorWX-Jc01tTXP4_DM6OOeLyuIw-lWorcgyk8XS9TGlwZSCSsw29dph9XECm2LElPD9oWnwAv_GQoKF775cPxn5PyARWQFnaFJXGZl7VpFe2gnJXN7Dg4FOgKh_lirok_6XsDHJSmmCqY9_FfKhTrEdlN5YHvsO7_giH08Xra-1-8DrUU5VRpwNu2uO1BGY6a8jbyRjzE7RuIHypKHOeBAlhxmzYlV8xcl_Gx8fxwldBUpmqNUJtwfgPkc50frCHDdiw2dpHxjvtSG3_c-SzAonvF59notx1npj8SFN_JRkBppZUKLSXUEBqz5tos"
@@ -163,7 +167,7 @@
     --header "Authorization: Bearer {ACCESS_TOKEN}" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "arquivo=@/tmp/phpuj7ihT" </code></pre></div>
+    --form "arquivo=@/tmp/phpRfRJeS" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -307,7 +311,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be a file. Must not be greater than 81920 kilobytes. Example: <code>/tmp/phpuj7ihT</code></p>
+<p>Must be a file. Must not be greater than 81920 kilobytes. Example: <code>/tmp/phpRfRJeS</code></p>
         </div>
         </form>
 
@@ -325,7 +329,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8084/api/upload-file/voluptatem" \
+    --get "http://localhost:8084/api/upload-file/arquivotest.csv" \
     --header "Authorization: Bearer {ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -333,7 +337,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8084/api/upload-file/voluptatem"
+    "http://localhost:8084/api/upload-file/arquivotest.csv"
 );
 
 const headers = {
@@ -472,10 +476,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="name"                data-endpoint="GETapi-upload-file--name-"
-               value="voluptatem"
+               value="arquivotest.csv"
                data-component="url">
     <br>
-<p>Example: <code>voluptatem</code></p>
+<p>Example: <code>arquivotest.csv</code></p>
             </div>
                     </form>
 
@@ -493,7 +497,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8084/api/upload-file/item/numquam" \
+    --get "http://localhost:8084/api/upload-file/item/arquivo_teste.csv" \
     --header "Authorization: Bearer {ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -501,7 +505,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8084/api/upload-file/item/numquam"
+    "http://localhost:8084/api/upload-file/item/arquivo_teste.csv"
 );
 
 const headers = {
@@ -776,10 +780,21 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="name"                data-endpoint="GETapi-upload-file-item--name-"
-               value="numquam"
+               value="arquivo_teste.csv"
                data-component="url">
     <br>
-<p>Example: <code>numquam</code></p>
+<p>string Example: <code>arquivo_teste.csv</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>params</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="params"                data-endpoint="GETapi-upload-file-item--name-"
+               value="TckrSymb=AMZO34"
+               data-component="url">
+    <br>
+<p>Pode Passar, como parametro da requisição, qualquer valor relacionado ao Arquivo para realizar o filtro das informações. Example: <code>TckrSymb=AMZO34</code></p>
             </div>
                     </form>
 
@@ -797,7 +812,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8084/api/upload-file-date/occaecati" \
+    --get "http://localhost:8084/api/upload-file-date/2025-01-01." \
     --header "Authorization: Bearer {ACCESS_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -805,7 +820,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8084/api/upload-file-date/occaecati"
+    "http://localhost:8084/api/upload-file-date/2025-01-01."
 );
 
 const headers = {
@@ -954,10 +969,171 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="createdDate"                data-endpoint="GETapi-upload-file-date--createdDate-"
-               value="occaecati"
+               value="2025-01-01."
                data-component="url">
     <br>
-<p>Example: <code>occaecati</code></p>
+<p>Example: <code>2025-01-01.</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="endpoints-DELETEapi-upload-file--name-">Deletar Arquivo</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Este Endpoint Realiza a <strong>Remoção das Informaçõe do Arquivo no Banco de Dados</strong>. Para que Seja realizado a Remoção das Informações o Arquivo não pode Estar com o Status 1 (Processando)</p>.
+
+<span id="example-requests-DELETEapi-upload-file--name-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request DELETE \
+    "http://localhost:8084/api/upload-file/arquivotest.csv" \
+    --header "Authorization: Bearer {ACCESS_TOKEN}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8084/api/upload-file/arquivotest.csv"
+);
+
+const headers = {
+    "Authorization": "Bearer {ACCESS_TOKEN}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "DELETE",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-DELETEapi-upload-file--name-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;message&quot;: &quot;Arquivo foi Excluido com Sucesso!&quot;,
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;O Arquivo N&atilde;o foi Encontrado em Nossa Base de Dados&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-DELETEapi-upload-file--name-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-DELETEapi-upload-file--name-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-DELETEapi-upload-file--name-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-DELETEapi-upload-file--name-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-DELETEapi-upload-file--name-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-DELETEapi-upload-file--name-" data-method="DELETE"
+      data-path="api/upload-file/{name}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-upload-file--name-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-DELETEapi-upload-file--name-"
+                    onclick="tryItOut('DELETEapi-upload-file--name-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-DELETEapi-upload-file--name-"
+                    onclick="cancelTryOut('DELETEapi-upload-file--name-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-DELETEapi-upload-file--name-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-red">DELETE</small>
+            <b><code>api/upload-file/{name}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="DELETEapi-upload-file--name-"
+               value="Bearer {ACCESS_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {ACCESS_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="DELETEapi-upload-file--name-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="DELETEapi-upload-file--name-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="name"                data-endpoint="DELETEapi-upload-file--name-"
+               value="arquivotest.csv"
+               data-component="url">
+    <br>
+<p>Example: <code>arquivotest.csv</code></p>
             </div>
                     </form>
 

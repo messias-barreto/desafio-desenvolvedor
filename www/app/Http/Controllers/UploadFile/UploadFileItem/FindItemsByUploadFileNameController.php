@@ -18,6 +18,10 @@ class FindItemsByUploadFileNameController extends Controller
      *
      * <p>Este Endpoint Realiza a Busca, e retorno das informações, referente aos itens(linhas) do arquivos, podendo passar os filtros de busca pelo params</p>.
      * @authenticated
+     * @urlParam name required string Example: arquivo_teste.csv
+     * @urlParam params string 
+     * Pode Passar, como parametro da requisição, qualquer valor relacionado ao Arquivo para realizar o filtro das informações.
+     * Example: TckrSymb=AMZO34
      * @header Authorization Bearer {ACCESS_TOKEN}
      * @response 200 {
      *     "message": "Itens Foram Encontrados com Sucesso",

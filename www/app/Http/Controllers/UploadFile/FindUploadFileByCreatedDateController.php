@@ -19,6 +19,7 @@ class FindUploadFileByCreatedDateController extends Controller
      *
      * @authenticated
      * @header Authorization Bearer {ACCESS_TOKEN}
+     * @urlParam createdDate string required Example: 2025-01-01.
      * @response 200 {
      *       "message": "Documento(s) foram Encontrado(s)",
      *       "data": [

@@ -14,7 +14,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            UploadFileStatusSeed::class
+            UploadFileStatusSeed::class,
+            ClientPassportSeed::class
         ]);
     }
 }

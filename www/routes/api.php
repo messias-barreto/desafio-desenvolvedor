@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UploadFile\CreateNewUploadFileController;
+use App\Http\Controllers\UploadFile\DeleteUploadItemController;
 use App\Http\Controllers\UploadFile\FindUploadFileByCreatedDateController;
 use App\Http\Controllers\UploadFile\FindUploadFileByNameController;
 use App\Http\Controllers\UploadFile\UploadFileItem\FindItemsByUploadFileNameController;
@@ -11,4 +12,5 @@ Route::middleware('client')->group(function () {
     Route::get('upload-file/{name}', [FindUploadFileByNameController::class, 'handle']);
     Route::get('upload-file/item/{name}', [FindItemsByUploadFileNameController::class, 'handle']);
     Route::get('upload-file-date/{createdDate}', [FindUploadFileByCreatedDateController::class, 'handle']);
+    Route::delete('upload-file/{name}', [DeleteUploadItemController::class, 'handle']);
 });

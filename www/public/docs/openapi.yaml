@@ -118,12 +118,51 @@ paths:
                     example: Unauthenticated.
       tags:
         - Endpoints
+    delete:
+      summary: 'Deletar Arquivo'
+      operationId: deletarArquivo
+      description: '<p>Este Endpoint Realiza a <strong>Remoção das Informaçõe do Arquivo no Banco de Dados</strong>. Para que Seja realizado a Remoção das Informações o Arquivo não pode Estar com o Status 1 (Processando)</p>.'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n    \"message\": \"message\": \"Arquivo foi Excluido com Sucesso!\",\n}"
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'O Arquivo Não foi Encontrado em Nossa Base de Dados'
+                properties:
+                  message:
+                    type: string
+                    example: 'O Arquivo Não foi Encontrado em Nossa Base de Dados'
+      tags:
+        - Endpoints
     parameters:
       -
         in: path
         name: name
         description: ''
-        example: voluptatem
+        example: arquivotest.csv
         required: true
         schema:
           type: string
@@ -159,11 +198,25 @@ paths:
       -
         in: path
         name: name
-        description: ''
-        example: numquam
+        description: string
+        example: arquivo_teste.csv
         required: true
         schema:
           type: string
+      -
+        in: path
+        name: params
+        description: 'Optional parameter. Pode Passar, como parametro da requisição, qualquer valor relacionado ao Arquivo para realizar o filtro das informações.'
+        required: true
+        schema:
+          type: string
+        examples:
+          omitted:
+            summary: 'When the value is omitted'
+            value: ''
+          present:
+            summary: 'When the value is present'
+            value: TckrSymb=AMZO34
   '/api/upload-file-date/{createdDate}':
     get:
       summary: 'Buscar Arquivos Pela Data de Criação'
@@ -254,7 +307,7 @@ paths:
         in: path
         name: createdDate
         description: ''
-        example: occaecati
+        example: 2025-01-01.
         required: true
         schema:
           type: string

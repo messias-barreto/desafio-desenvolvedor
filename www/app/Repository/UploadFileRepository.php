@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 namespace App\Repository;
 
 use App\Contract\UploadFileContract;
@@ -36,11 +37,21 @@ class UploadFileRepository implements UploadFileContract
 
     public function findByCreatedDate(string $date): ?object
     {
-        return $this->repository->where(DB::raw('DATE(created_at)'), $date)->get(); 
+        return $this->repository->where(DB::raw('DATE(created_at)'), $date)->get();
     }
 
     public function update(array $data): bool
     {
         return $this->repository->update($data);
+    }
+
+    public function destroy(int $id): bool
+    {
+        $record = $this->repository->find($id);
+        if (!$record) {
+            return false;
+        }
+
+        return $record->delete();
     }
 }

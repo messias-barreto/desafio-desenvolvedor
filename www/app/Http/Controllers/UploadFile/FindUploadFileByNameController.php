@@ -19,6 +19,7 @@ class FindUploadFileByNameController extends Controller
      *
      * @authenticated
      * @header Authorization Bearer {ACCESS_TOKEN}
+     * @urlParam name string required Example: arquivotest.csv
      * @response 200 {
      *       "message": "Documento(s) foram Encontrado(s)",
      *       "data": [

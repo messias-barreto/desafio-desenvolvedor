@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Desafio Desenvolvedor - Oliveira Trust",
-        "_postman_id": "6271b82f-2dad-4661-91aa-3f65d353826d",
+        "_postman_id": "5b85d622-f057-409a-87ac-b502726149c4",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -88,7 +88,7 @@
                                 {
                                     "id": "name",
                                     "key": "name",
-                                    "value": "voluptatem",
+                                    "value": "arquivotest.csv",
                                     "description": ""
                                 }
                             ]
@@ -144,8 +144,14 @@
                                 {
                                     "id": "name",
                                     "key": "name",
-                                    "value": "numquam",
-                                    "description": ""
+                                    "value": "arquivo_teste.csv",
+                                    "description": "string"
+                                },
+                                {
+                                    "id": "params",
+                                    "key": "params",
+                                    "value": "TckrSymb%3DAMZO34",
+                                    "description": "Pode Passar, como parametro da requisi\u00e7\u00e3o, qualquer valor relacionado ao Arquivo para realizar o filtro das informa\u00e7\u00f5es."
                                 }
                             ]
                         },
@@ -194,7 +200,7 @@
                                 {
                                     "id": "createdDate",
                                     "key": "createdDate",
-                                    "value": "occaecati",
+                                    "value": "2025-01-01.",
                                     "description": ""
                                 }
                             ]
@@ -240,6 +246,62 @@
                             "header": [],
                             "code": 404,
                             "body": "{\n     \"message\": \"N\u00e3o foi Encontrado Nenhum Documento Adicionando no Dia Solicitado\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Deletar Arquivo",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/upload-file\/:name",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/upload-file\/:name",
+                            "variable": [
+                                {
+                                    "id": "name",
+                                    "key": "name",
+                                    "value": "arquivotest.csv",
+                                    "description": ""
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {ACCESS_TOKEN}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "<p>Este Endpoint Realiza a <strong>Remo\u00e7\u00e3o das Informa\u00e7\u00f5e do Arquivo no Banco de Dados<\/strong>. Para que Seja realizado a Remo\u00e7\u00e3o das Informa\u00e7\u00f5es o Arquivo n\u00e3o pode Estar com o Status 1 (Processando)<\/p>."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n    \"message\": \"message\": \"Arquivo foi Excluido com Sucesso!\",\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n     \"message\": \"Unauthenticated.\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n     \"message\": \"O Arquivo N\u00e3o foi Encontrado em Nossa Base de Dados\"\n}",
                             "name": ""
                         }
                     ]

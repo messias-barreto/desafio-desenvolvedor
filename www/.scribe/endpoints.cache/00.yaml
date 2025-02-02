@@ -94,14 +94,14 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: voluptatem
+        example: arquivotest.csv
         type: string
         enumValues: []
-        exampleWasSpecified: false
+        exampleWasSpecified: true
         nullable: false
         custom: []
     cleanUrlParameters:
-      name: voluptatem
+      name: arquivotest.csv
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -168,16 +168,27 @@ endpoints:
     urlParameters:
       name:
         name: name
-        description: ''
+        description: string
         required: true
-        example: numquam
+        example: arquivo_teste.csv
         type: string
         enumValues: []
-        exampleWasSpecified: false
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      params:
+        name: params
+        description: 'Pode Passar, como parametro da requisição, qualquer valor relacionado ao Arquivo para realizar o filtro das informações.'
+        required: false
+        example: TckrSymb=AMZO34
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
         nullable: false
         custom: []
     cleanUrlParameters:
-      name: numquam
+      name: arquivo_teste.csv
+      params: TckrSymb=AMZO34
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -382,14 +393,14 @@ endpoints:
         name: createdDate
         description: ''
         required: true
-        example: occaecati
+        example: 2025-01-01.
         type: string
         enumValues: []
-        exampleWasSpecified: false
+        exampleWasSpecified: true
         nullable: false
         custom: []
     cleanUrlParameters:
-      createdDate: occaecati
+      createdDate: 2025-01-01.
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -436,6 +447,75 @@ endpoints:
         content: |-
           {
                "message": "Não foi Encontrado Nenhum Documento Adicionando no Dia Solicitado"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - DELETE
+    uri: 'api/upload-file/{name}'
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Deletar Arquivo'
+      description: '<p>Este Endpoint Realiza a <strong>Remoção das Informaçõe do Arquivo no Banco de Dados</strong>. Para que Seja realizado a Remoção das Informações o Arquivo não pode Estar com o Status 1 (Processando)</p>.'
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {ACCESS_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      name:
+        name: name
+        description: ''
+        required: true
+        example: arquivotest.csv
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      name: arquivotest.csv
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+              "message": "message": "Arquivo foi Excluido com Sucesso!",
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: |-
+          {
+               "message": "Unauthenticated."
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 404
+        content: |-
+          {
+               "message": "O Arquivo Não foi Encontrado em Nossa Base de Dados"
           }
         headers: []
         description: ''

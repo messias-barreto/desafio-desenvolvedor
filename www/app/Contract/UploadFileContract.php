@@ -9,4 +9,5 @@ interface UploadFileContract
     public function findByCreatedDate(string $date): ?object;
     public function findById(int $id): ?object;
     public function update(array $data): bool;
+    public function destroy(int $id): bool;
 }
