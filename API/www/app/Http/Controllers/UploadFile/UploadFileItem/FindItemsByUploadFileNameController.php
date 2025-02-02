@@ -5,6 +5,7 @@ namespace App\Http\Controllers\UploadFile\UploadFileItem;
 use App\Http\Controllers\Controller;
 use App\Services\UploadFile\UploadFileItem\FindItemsByUploadFileNameService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class FindItemsByUploadFileNameController extends Controller
 {
@@ -12,9 +13,10 @@ class FindItemsByUploadFileNameController extends Controller
         private readonly FindItemsByUploadFileNameService $service
     ) {}
 
-    public function handle(string $name): JsonResponse
+    public function handle(Request $request, string $name): JsonResponse
     {
-        $response = $this->service->execute($name);
+        $filters = $request->query();
+        $response = $this->service->execute($name, $filters);
         return response()->json($response, 200);
     }
 }
