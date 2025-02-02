@@ -26,7 +26,6 @@ namespace App\Services\UploadFile\Adapter {
             $csv->setHeaderOffset(0);
             $limitChunk = 1000;
             $uploadFileItemChunck = [];
-            $count = 0;
 
             try {
                 foreach ($csv as $row) {
@@ -44,7 +43,6 @@ namespace App\Services\UploadFile\Adapter {
                         $this->repository->insertBatch($uploadFileItemChunck);
                         $uploadFileItemChunck = [];
                         DB::commit();
-                        $count++;
                     }
                 }
 

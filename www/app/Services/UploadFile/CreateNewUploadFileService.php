@@ -56,7 +56,6 @@ class CreateNewUploadFileService
                 'uploadFileId' => $uploadFile->id
             ];
 
-            #$this->processFile($fileData, $fileExtencion);  
             FileUploadJob::dispatch($fileData, $fileExtencion);
             DB::commit();
 
@@ -68,13 +67,5 @@ class CreateNewUploadFileService
             DB::rollBack();
             throw new BadRequestException('Não foi Possível Processar o Arquivo Enviado, Porfavor Tente Novamente');
         }
-    }
-
-    public function processFile(array $data, string $type): void
-    {
-        $data = match ($type) {
-            'csv' => $this->processCsvFileAdapter->processItem($data['fileName'], $data['uploadFileId']),
-            'xlsx' => $this->processXlsFileAdapter->processItem($data['fileName'], $data['uploadFileId'])
-        };
     }
 }

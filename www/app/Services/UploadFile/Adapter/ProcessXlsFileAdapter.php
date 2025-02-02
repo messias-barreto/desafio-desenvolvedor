@@ -39,7 +39,6 @@ class ProcessXlsFileAdapter implements ProcessFileContract
         array_shift($data);
         
         $limitChunk = 500;
-        $count = 0;
         $failedProcessFile = false;
         foreach (array_chunk($data, $limitChunk) as $chunk) {
             DB::beginTransaction();
@@ -50,11 +49,8 @@ class ProcessXlsFileAdapter implements ProcessFileContract
                     return array_combine($header, $repairChunkArray);
                 }, $chunk);
 
-                $count++;
                 $this->repository->insertBatch($chunk);
                 DB::commit();
-
-                Log::info('BATCH ' . $count . ' ADICIONADA!');
             } catch (Exception $e) {
                 DB::rollBack();
                 $failedProcessFile = true;
