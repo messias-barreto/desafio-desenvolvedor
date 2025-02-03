@@ -63,4 +63,10 @@ Caso as migrations já tenham sido executadas com sucesso e seja necessário rei
 docker compose restart
 ``
 Isso garantirá que todos os contêineres sejam reiniciados e que o ambiente esteja corretamente configurado. 🚀
+```
+
+### 📚 Documentação
+
+Acesse a documentação da API no seguinte endereço: http://127.0.0.1:8084/docs/
+
 
