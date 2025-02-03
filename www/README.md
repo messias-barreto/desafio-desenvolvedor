@@ -45,3 +45,22 @@ docker compose up -d
 docker exec -it OLIVEIRA_TRUST_PHP83 php /usr/share/nginx/html/artisan migrate --seed
 ```
 
+### 🔎 Verificando o Status das Filas
+
+O processamento das filas ocorre via Supervisor. Para verificar se os workers estão ativos, utilize:
+
+```bash
+docker exec -it OLIVEIRA_TRUST_PHP83 supervisorctl status
+```
+Se as filas não estiverem rodando corretamente, reinicie os workers com:
+```bash
+docker exec -it OLIVEIRA_TRUST_PHP83 supervisorctl restart all
+```
+### 🔄 Reiniciando os Serviços
+
+Caso as migrations já tenham sido executadas com sucesso e seja necessário reiniciar os serviços para garantir a estabilidade, utilize:
+```bash
+docker compose restart
+``
+Isso garantirá que todos os contêineres sejam reiniciados e que o ambiente esteja corretamente configurado. 🚀
+
