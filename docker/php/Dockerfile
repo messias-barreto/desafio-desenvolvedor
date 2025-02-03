@@ -87,7 +87,6 @@ RUN chown -R www-data:www-data /usr/share/nginx/html && \
     chmod -R 775 /usr/share/nginx/html/storage && \
     chmod -R 775 /usr/share/nginx/html/bootstrap/cache && \
     chmod -R 775 /usr/share/nginx/html/vendor && \
-    chmod -R 640 /usr/share/nginx/html/.env && \
     chmod -R 755 /usr/share/nginx/html/public
 
 # Adicione o script de inicialização
