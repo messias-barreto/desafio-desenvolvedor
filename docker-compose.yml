@@ -24,6 +24,7 @@ services:
     volumes:
       - ./www:/usr/share/nginx/html:rw
     restart: always
+    command: ["/start_php_container.sh"]
     networks:
       - desafio_desenvolvedor
 

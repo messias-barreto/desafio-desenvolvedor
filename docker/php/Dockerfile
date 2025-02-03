@@ -77,6 +77,10 @@ COPY ../docker/supervisor/conf.d /etc/supervisor/conf.d
 # Copiar os arquivos do repositório
 COPY ../www /usr/share/nginx/html
 
+# Executar o Composer como www-data antes de mudar o usuário
+RUN composer install --no-dev --working-dir=/usr/share/nginx/html && \
+    chown -R www-data:www-data /usr/share/nginx/html
+
 # Instalar as permissões
 RUN chown -R www-data:www-data /usr/share/nginx/html && \
     chmod -R 750 /usr/share/nginx/html && \
@@ -86,13 +90,9 @@ RUN chown -R www-data:www-data /usr/share/nginx/html && \
     chmod -R 640 /usr/share/nginx/html/.env && \
     chmod -R 755 /usr/share/nginx/html/public
 
-# Executar o Composer como www-data antes de mudar o usuário
-RUN composer install --no-dev --working-dir=/usr/share/nginx/html && \
-    chown -R www-data:www-data /usr/share/nginx/html
-
 # Adicione o script de inicialização
 COPY ../docker/php/start_php_container.sh /start_php_container.sh
 RUN chmod +x /start_php_container.sh
 
 # Defina o script como comando padrão
-CMD ["/start_php_container.sh"]
+CMD ["php-fpm"]
